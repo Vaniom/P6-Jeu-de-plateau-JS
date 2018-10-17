@@ -1,6 +1,7 @@
 var gridArray = [];
 var randomArray = [];
-function Grid() {
+function Grid(name) {
+    this.name = name;
     
 }
 Grid.prototype.createElements = function(){ //placement des cases "grass"
@@ -17,83 +18,76 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
         console.log(id);        
         verif = randomArray.indexOf(id);
         console.log(verif);
-        if (verif == -1) {
+        if (verif === -1) {
             randomArray.push(id);
         } else {
             tirage(max);
         }
-        console.log(randomArray);
+        //console.log(randomArray);
     }
     randomArray.splice(0, randomArray.length);// On efface le tableau
 
-    for (var l = 0; l < 12; l++) { // placement des 12 cases "stone"               
+    for (var l = 0; l < 12; l++) { // On fait 12 tirages              
         tirage(100); 
     }   
         
-    for (var m = 0; m < randomArray.length; m++) {
+    for (var m = 0; m < randomArray.length; m++) { // et on place les 12 cases "stone"
         var val = randomArray[m];
-        console.log("val = " + val);  
-        if (gridArray[val].classe == "grass") {
-            var stone = new Box("stone", gridArray[val].x, gridArray[val].y);
-            gridArray.splice(val, 1, stone);
-        } else {
-            val++;
-        }        
+        //console.log("val = " + val);        
+        var stone = new Box("stone", gridArray[val].x, gridArray[val].y);
+        gridArray.splice(val, 1, stone);             
     };
-    var count = 0;
-    for (var q = 0; q < gridArray.length; q++) {
-        if (gridArray[q].classe == "stone"){
-            count ++;
-        }else {}
-    }
-    console.log("compteur = "  + count);
-
+    randomArray.splice(0, randomArray.length);// vidage du tableau
 
     function createWeapon(classe, damage){// fonction de creation des armes
-        var id2 = Math.floor(Math.random() * 100);        
-        if (gridArray[id2].classe == "grass") {
-            var arme = new Weapon (classe, gridArray[id2].x, gridArray[id2].y, damage);
-            gridArray.splice(id2, 1, arme);
-        } else {
-            id2 = Math.floor(Math.random() * 100);
-        }
-        
+        tirage(10);
+        for (var n = 0; n < randomArray.length; n++) {
+            var val2 = randomArray[n];  
+            if (gridArray[val2].classe === "grass") {
+                var arme = new Weapon (classe, gridArray[val2].x, gridArray[val2].y, damage);
+                gridArray.splice(val2, 1, arme);
+            } else {
+                /*do {
+                    n++;
+                }
+                while (gridArray[val2].classe != "grass") */
+            };           
+        }        
     };
     createWeapon("epee", 20);
     createWeapon("dague", 15);
     createWeapon("sabre", 30);
     createWeapon("hache", 25);
+
     function createPlayer(classe) {
-        var id3 = Math.floor(Math.random() * 100);        
-        if(gridArray[id3].classe == "grass") {
-            var player = new Player (classe, gridArray[id3].x, gridArray[id3].y);
-            gridArray.splice(id3, 1, player);
-        } else {}
+        tirage(100);
+        for (var p = 0; p < randomArray.length; p++) {
+            var val3 = randomArray[p];     
+            if (gridArray[val3].classe === "grass") {
+                var player = new Player (classe, gridArray[val3].x, gridArray[val3].y);
+                gridArray.splice(val3, 1, player);
+            } else {
+              
+            }
+        }
     };
     createPlayer("player0ne");
     createPlayer("playerTwo");
-    /*for (var i = 0; i < 12 ; i++){ //initialisation d'une boucle de 12 tours
-    // génération aleatoire de x et y en chiffres entiers compris entre 0 et 10
-        var aleatX = Math.floor(Math.random() * 10);
-        //console.log('aleatX = ' + aleatX);
-        var aleatY = Math.floor(Math.random() * 10);
-        //console.log('aleatY = ' + aleatY);
-        var supprX = gridArray.find(function(element) {
-            return element.x == aleatX;
-        });
-        console.log('supprX = ' + supprX);
-        //gridArray.splice(element.index, 1, stone);
-        /*
-        for (var j = 0; j < gridArray.length; j++) { // on remplace dans le tableau les cases initialement créées par des cases grises. correspondance faite sur l'id
-        console.log('aleatX = ' + aleatX);
-        console.log('aleatY = ' + aleatY);
-        do {
-
-        } while (aleatX != gridArray[j].x && aleatY != gridArray[j].y)
-                var stone = new Box("stone", aleatY * 60, aleatX * 60);            
-                gridArray.splice(j, 1, stone);// et on remplace dans le tableau
-            //}; //else {};
-        }
+    function createPlayerTwo(){        
+        var index = randomArray.indexOf(Player)
         
-    }*/
+        /*var diffX = Math.abs(playerTwo.x - playerOne.x);
+        var diffY = Math.abs(playerOne.y - playerTwo.y);
+        console.log("diffX = " + diffX + " / diffY = " + diffY);*/
+    }
+    createPlayerTwo();
+
+    // comptage des objets "stone" créés (uniquement pour contrôle)
+    var count = 0;
+    for (var q = 0; q < gridArray.length; q++) {
+        if (gridArray[q].classe === "stone"){
+            count ++;
+        }else {}
+    }
+    console.log("compteur stones = "  + count);
 }
