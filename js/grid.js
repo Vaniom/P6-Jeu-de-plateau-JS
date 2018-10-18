@@ -1,19 +1,21 @@
 var gridArray = [];
 var randomArray = [];
+
 function Grid(name) {
     this.name = name;
-    
+
 }
-Grid.prototype.createElements = function(){ //placement des cases "grass"
+Grid.prototype.createElements = function () { //placement des cases "grass"
     for (var i = 0; i < 10; i++) { //variable i boucle sur les abscisses
         for (var j = 0; j < 10; j++) { // variable j boucle sur les ordonnées 
-            var box = new Box("grass", j*60, i*60);
+            var box = new Box("grass", j * 60, i * 60);
             gridArray.push(box);
         }
     };
     var verif;
     var id;
-    function tirage(max) {// On s'assure de ne pas tirer plusieurs fois le même nombre
+
+    function tirage(max) { // On s'assure de ne pas tirer plusieurs fois le même nombre
         id = Math.floor(Math.random() * max);
         //console.log(id);        
         verif = randomArray.indexOf(id);
@@ -25,50 +27,50 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
         }
         //console.log(randomArray);
     }
-    randomArray.splice(0, randomArray.length);// On efface le tableau
+    randomArray.splice(0, randomArray.length); // On efface le tableau
 
     for (var l = 0; l < 12; l++) { // On fait 12 tirages              
-        tirage(100); 
-    }   
-        
+        tirage(100);
+    }
+
     for (var m = 0; m < randomArray.length; m++) { // et on place les 12 cases "stone"
         var val = randomArray[m];
         //console.log("val = " + val);        
         var stone = new Box("stone", gridArray[val].x, gridArray[val].y);
-        gridArray.splice(val, 1, stone);             
+        gridArray.splice(val, 1, stone);
     };
-    randomArray.splice(0, randomArray.length);// vidage du tableau
+    randomArray.splice(0, randomArray.length); // vidage du tableau
     var idx;
     var newTirage;
 
-    function check(){
-        for (var j = 0; j < randomArray.length; j++){
+    function check() {
+        for (var j = 0; j < randomArray.length; j++) {
             idx = randomArray[j];
-            console.log("idx = " + idx);
-            console.log("gridArray[idx].classe = " + gridArray[idx].classe);
-            if(gridArray[idx].classe != "grass"){
-                newTirage = Math.floor(Math.random() * 10);
-                console.log("newTirage = " + newTirage);
-                console.log("j = " + j);
+            //console.log("idx = " + idx);
+            //console.log("gridArray[idx].classe = " + gridArray[idx].classe);
+            if (gridArray[idx].classe != "grass") {
+                newTirage = Math.floor(Math.random() * 100);
+                //console.log("newTirage = " + newTirage);
+                //console.log("j = " + j);
                 randomArray.splice(j, 1, newTirage);
                 check();
             }
-        } 
+        }
     }
-    
-    function createWeapon(classe, damage){// fonction de creation des armes
-        tirage(10);
+
+    function createWeapon(classe, damage) { // fonction de creation des armes
+        tirage(100);
         check();
-        console.log("randomArray = " + randomArray);
-           
+        //console.log("randomArray = " + randomArray);
+
         for (var n = 0; n < randomArray.length; n++) {
             var val2 = randomArray[n];
-            console.log("val2 = " + val2);
-            var arme = new Weapon (classe, gridArray[val2].x, gridArray[val2].y, damage);
+            //console.log("val2 = " + val2);
+            var arme = new Weapon(classe, gridArray[val2].x, gridArray[val2].y, damage);
             gridArray.splice(val2, 1, arme);
         }
         randomArray.splice(0, randomArray.length);
-    }         
+    }
 
     createWeapon("dague", 15);
     createWeapon("sabre", 30);
@@ -77,32 +79,55 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
 
     function createPlayer(classe) {
         tirage(100);
+        check();
+        console.log(classe);
+        if (classe === "playerTwo"){
+            checkEspacement();
+        } else {}
         for (var p = 0; p < randomArray.length; p++) {
-            var val3 = randomArray[p];     
-            if (gridArray[val3].classe === "grass") {
-                var player = new Player (classe, gridArray[val3].x, gridArray[val3].y);
-                gridArray.splice(val3, 1, player);
-            } else {}
+            var val3 = randomArray[p];
+            var player = new Player(classe, gridArray[val3].x, gridArray[val3].y);
+            gridArray.splice(val3, 1, player);
         }
+        randomArray.splice(0, randomArray.length);
     };
     createPlayer("playerOne");
     createPlayer("playerTwo");
-    function createPlayerTwo(){        
-        var index = randomArray.indexOf(Player)
-        
-        /*var diffX = Math.abs(playerTwo.x - playerOne.x);
-        var diffY = Math.abs(playerOne.y - playerTwo.y);
-        console.log("diffX = " + diffX + " / diffY = " + diffY);*/
+    //var ver;
+    function checkEspacement() {
+        var playerOne;
+        for (var k = 0; k < gridArray.length; k++){
+            if(gridArray[k].classe === "playerOne"){
+                playerOne = gridArray[k];
+            }
+        }
+        console.log("playerOne = " + playerOne);
+        for (var j = 0; j < randomArray.length; j++) {
+            var dex = randomArray[j];
+            console.log("dex = " + dex);
+            console.log("gridArray[dex].classe = " + gridArray[dex].classe);
+            var posXPlayerTwo  = gridArray[dex].x;
+            var posYPlayerTwo = gridArray[dex].y;        
+            
+            var ecartX = Math.abs(posXPlayerTwo - playerOne.x);
+            var ecartY = Math.abs(posYPlayerTwo - playerOne.y);
+            
+            if (ecartX < 240 && ecartY < 240) {
+                newItem = Math.floor(Math.random() * 100);
+                console.log("newItem = " + newItem);
+                console.log("j = " + j);
+                randomArray.splice(j, 1, newItem);
+                checkEspacement();
+            }
+        }
     }
-    createPlayerTwo();
-
     // comptage des objets créés (uniquement pour contrôle)
-    function count(elt){
+    function count(elt) {
         var count = 0;
         for (var q = 0; q < gridArray.length; q++) {
-            if (gridArray[q].classe === elt){
-                count ++;
-            }else {}
+            if (gridArray[q].classe === elt) {
+                count++;
+            } else {}
         }
         return count;
     }
@@ -114,13 +139,40 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
     var countSabre = count("sabre");
     var countPlayerOne = count("playerOne");
     var countPlayerTwo = count("playerTwo");
+    PrintEspace();
 
-    console.log("compteur grass = "  + countGrass);
-    console.log("compteur stones = "  + countStone);
-    console.log("compteur épée = "  + countEpee);
-    console.log("compteur dague = "  + countDague);
-    console.log("compteur hache = "  + countHache);
-    console.log("compteur sabre = "  + countSabre);
-    console.log("compteur playerOne = "  + countPlayerOne);
-    console.log("compteur playerTwo = "  + countPlayerTwo);
+    console.log("compteur grass = " + countGrass);
+    console.log("compteur stones = " + countStone);
+    console.log("compteur épée = " + countEpee);
+    console.log("compteur dague = " + countDague);
+    console.log("compteur hache = " + countHache);
+    console.log("compteur sabre = " + countSabre);
+    console.log("compteur playerOne = " + countPlayerOne);
+    console.log("compteur playerTwo = " + countPlayerTwo);
+    
+    // Contrôle de l'espacement entre les deux joueurs (affichage console)
+    function PrintEspace(){
+        var playerOne;
+        var playerTwo;
+        for (var l = 0; l < gridArray.length; l++){
+            if(gridArray[l].classe === "playerOne"){
+                playerOne = gridArray[l];
+            }else if (gridArray[l].classe === "playerTwo"){
+                playerTwo = gridArray[l];
+            }
+        }
+        console.log("espacementX = " + (Math.abs(playerOne.x - playerTwo.x)));
+        console.log("espacementY = " + (Math.abs(playerOne.y - playerTwo.y)));
+    };
+    Grid.prototype.draw = function(){
+        var map = document.getElementById('map');
+        map.innerHTML = "";
+        for (var i = 0; i < gridArray.length; i++) {
+            var boxDiv = document.createElement('div');            
+            boxDiv.style.left = this.x + "px";
+            boxDiv.style.top = this.y + "px";
+            boxDiv.className = gridArray[i].classe;            
+            map.appendChild(boxDiv);
+        }
+    }
 }

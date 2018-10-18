@@ -7,4 +7,81 @@
     width: 600px;
     overflow: hidden;
     margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grass {
+    background-image: url("../media/grass.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+    margin: 0;
+    padding: 0;
+}
+.stone {
+    background-image: url("../media/lave.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+}
+.epee {
+    background-image: url("../media/epee.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+}
+.dague {
+    background-image: url("../media/dague.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+}
+.sabre {
+    background-image: url("../media/sabre.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+}
+.hache {
+    background-image: url("../media/hache.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+}
+.epeeBois {
+    background-image: url("../media/epeebois.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+}
+.playerOne {
+    background-image: url("../media/steve.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+}
+.playerTwo {
+    background-image: url("../media/link.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
 }
