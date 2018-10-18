@@ -15,9 +15,9 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
     var id;
     function tirage(max) {// On s'assure de ne pas tirer plusieurs fois le même nombre
         id = Math.floor(Math.random() * max);
-        console.log(id);        
+        //console.log(id);        
         verif = randomArray.indexOf(id);
-        console.log(verif);
+        //console.log(verif);
         if (verif === -1) {
             randomArray.push(id);
         } else {
@@ -38,26 +38,42 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
         gridArray.splice(val, 1, stone);             
     };
     randomArray.splice(0, randomArray.length);// vidage du tableau
+    var idx;
+    var newTirage;
 
+    function check(){
+        for (var j = 0; j < randomArray.length; j++){
+            idx = randomArray[j];
+            console.log("idx = " + idx);
+            console.log("gridArray[idx].classe = " + gridArray[idx].classe);
+            if(gridArray[idx].classe != "grass"){
+                newTirage = Math.floor(Math.random() * 10);
+                console.log("newTirage = " + newTirage);
+                console.log("j = " + j);
+                randomArray.splice(j, 1, newTirage);
+                check();
+            }
+        } 
+    }
+    
     function createWeapon(classe, damage){// fonction de creation des armes
         tirage(10);
+        check();
+        console.log("randomArray = " + randomArray);
+           
         for (var n = 0; n < randomArray.length; n++) {
-            var val2 = randomArray[n];  
-            if (gridArray[val2].classe === "grass") {
-                var arme = new Weapon (classe, gridArray[val2].x, gridArray[val2].y, damage);
-                gridArray.splice(val2, 1, arme);
-            } else {
-                /*do {
-                    n++;
-                }
-                while (gridArray[val2].classe != "grass") */
-            };           
-        }        
-    };
-    createWeapon("epee", 20);
+            var val2 = randomArray[n];
+            console.log("val2 = " + val2);
+            var arme = new Weapon (classe, gridArray[val2].x, gridArray[val2].y, damage);
+            gridArray.splice(val2, 1, arme);
+        }
+        randomArray.splice(0, randomArray.length);
+    }         
+
     createWeapon("dague", 15);
     createWeapon("sabre", 30);
     createWeapon("hache", 25);
+    createWeapon("epee", 20);
 
     function createPlayer(classe) {
         tirage(100);
@@ -66,12 +82,10 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
             if (gridArray[val3].classe === "grass") {
                 var player = new Player (classe, gridArray[val3].x, gridArray[val3].y);
                 gridArray.splice(val3, 1, player);
-            } else {
-              
-            }
+            } else {}
         }
     };
-    createPlayer("player0ne");
+    createPlayer("playerOne");
     createPlayer("playerTwo");
     function createPlayerTwo(){        
         var index = randomArray.indexOf(Player)
@@ -82,12 +96,31 @@ Grid.prototype.createElements = function(){ //placement des cases "grass"
     }
     createPlayerTwo();
 
-    // comptage des objets "stone" créés (uniquement pour contrôle)
-    var count = 0;
-    for (var q = 0; q < gridArray.length; q++) {
-        if (gridArray[q].classe === "stone"){
-            count ++;
-        }else {}
+    // comptage des objets créés (uniquement pour contrôle)
+    function count(elt){
+        var count = 0;
+        for (var q = 0; q < gridArray.length; q++) {
+            if (gridArray[q].classe === elt){
+                count ++;
+            }else {}
+        }
+        return count;
     }
-    console.log("compteur stones = "  + count);
+    var countStone = count("stone");
+    var countGrass = count("grass");
+    var countEpee = count("epee");
+    var countDague = count("dague");
+    var countHache = count("hache");
+    var countSabre = count("sabre");
+    var countPlayerOne = count("playerOne");
+    var countPlayerTwo = count("playerTwo");
+
+    console.log("compteur grass = "  + countGrass);
+    console.log("compteur stones = "  + countStone);
+    console.log("compteur épée = "  + countEpee);
+    console.log("compteur dague = "  + countDague);
+    console.log("compteur hache = "  + countHache);
+    console.log("compteur sabre = "  + countSabre);
+    console.log("compteur playerOne = "  + countPlayerOne);
+    console.log("compteur playerTwo = "  + countPlayerTwo);
 }
