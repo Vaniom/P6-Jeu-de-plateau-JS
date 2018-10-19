@@ -38,6 +38,7 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
         var val = randomArray[m];
         //console.log("val = " + val);        
         var stone = new Box("stone", gridArray[val].x, gridArray[val].y);
+        stone.accessible = false;
         gridArray.splice(val, 1, stone);
     };
     randomArray.splice(0, randomArray.length); // vidage du tableau
