@@ -15,8 +15,9 @@ $(function(){
                 playerTwo = gridArray[i];
             }
         }
-        playerOne.animate();
-        //animatePlayerOne();
+        
+        playerOne.animate();// appelle la fonction sur l'objet Player, ne pas faire de second appel pour playerTwo, sinon on lance deux fois la fonction sur les mêmes objets!
+
         $('#generateMap').hide();
     })
 })

@@ -164,15 +164,25 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
         console.log("espacementX = " + (Math.abs(playerOne.x - playerTwo.x)));
         console.log("espacementY = " + (Math.abs(playerOne.y - playerTwo.y)));
     };
-    Grid.prototype.draw = function(){
+    
+
+    function intervalDraw(){
         var map = document.getElementById('map');
-        map.innerHTML = "";
+        while (map.firstChild) {
+            map.removeChild(map.firstChild);
+          }
         for (var i = 0; i < gridArray.length; i++) {
             var boxDiv = document.createElement('div');            
             boxDiv.style.left = this.x + "px";
             boxDiv.style.top = this.y + "px";
             boxDiv.className = gridArray[i].classe;            
-            map.appendChild(boxDiv);
+            map.appendChild(boxDiv);            
         }
+        console.log("+1");
+
+    }
+    var intervalID;
+    Grid.prototype.draw = function(){
+        intervalID = setInterval(intervalDraw, 500);
     }
 }
