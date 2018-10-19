@@ -6,7 +6,8 @@ function Grid(name) {
     this.array = gridArray;
 
 }
-Grid.prototype.createElements = function () { //placement des cases "grass"
+//placement des cases "grass"
+Grid.prototype.createElements = function () { 
     for (var i = 0; i < 10; i++) { //variable i boucle sur les abscisses
         for (var j = 0; j < 10; j++) { // variable j boucle sur les ordonnées 
             var box = new Box("grass", j * 60, i * 60);
@@ -15,59 +16,52 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
     };
     var verif;
     var id;
-
-    function tirage(max) { // On s'assure de ne pas tirer plusieurs fois le même nombre
+//Tirage aleatoire d'un entier naturel compris entre 0 et un nombre maximum(exclu)
+    function tirage(max) { 
         id = Math.floor(Math.random() * max);
-        //console.log(id);        
+        // On s'assure de ne pas tirer plusieurs fois le même nombre:    
         verif = randomArray.indexOf(id);
-        //console.log(verif);
         if (verif === -1) {
             randomArray.push(id);
         } else {
+            //si le nombre tiré est déjà présent dans le tableau, on en tire un autre:
             tirage(max);
         }
-        //console.log(randomArray);
     }
     randomArray.splice(0, randomArray.length); // On efface le tableau
 
-    for (var l = 0; l < 12; l++) { // On fait 12 tirages              
+    for (var l = 0; l < 12; l++) { // On fait 12 tirages entre 0 et 100             
         tirage(100);
     }
 
-    for (var m = 0; m < randomArray.length; m++) { // et on place les 12 cases "stone"
-        var val = randomArray[m];
-        //console.log("val = " + val);        
+    for (var m = 0; m < randomArray.length; m++) { //on place les 12 cases "stone"
+        var val = randomArray[m];    
         var stone = new Box("stone", gridArray[val].x, gridArray[val].y);
         stone.accessible = false;
         gridArray.splice(val, 1, stone);
     };
     randomArray.splice(0, randomArray.length); // vidage du tableau
+
     var idx;
     var newTirage;
-
+// la fonction check s'assure qu'on ne place pas un objet sur une case autre que de l'herbe:
     function check() {
         for (var j = 0; j < randomArray.length; j++) {
             idx = randomArray[j];
-            //console.log("idx = " + idx);
-            //console.log("gridArray[idx].classe = " + gridArray[idx].classe);
             if (gridArray[idx].classe != "grass") {
                 newTirage = Math.floor(Math.random() * 100);
-                //console.log("newTirage = " + newTirage);
-                //console.log("j = " + j);
                 randomArray.splice(j, 1, newTirage);
                 check();
             }
         }
     }
-
-    function createWeapon(classe, damage) { // fonction de creation des armes
+// fonction de creation des armes:
+    function createWeapon(classe, damage) { 
         tirage(100);
         check();
-        //console.log("randomArray = " + randomArray);
 
         for (var n = 0; n < randomArray.length; n++) {
             var val2 = randomArray[n];
-            //console.log("val2 = " + val2);
             var arme = new Weapon(classe, gridArray[val2].x, gridArray[val2].y, damage);
             gridArray.splice(val2, 1, arme);
         }
@@ -79,10 +73,10 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
     createWeapon("hache", 25);
     createWeapon("epee", 20);
 
+    // fonction de cration et placement des personnages:
     function createPlayer(classe) {
         tirage(100);
         check();
-        //console.log(classe);
         if (classe === "playerTwo"){
             checkEspacement();
         } else {}
@@ -95,7 +89,8 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
     };
     createPlayer("playerOne");
     createPlayer("playerTwo");
-    //var ver;
+
+// Fonction qui vérifie l'espacement x et y entre les deux personnages:
     function checkEspacement() {
         var playerOne;
         for (var k = 0; k < gridArray.length; k++){
@@ -103,17 +98,13 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
                 playerOne = gridArray[k];
             }
         }
-        //console.log("playerOne = " + playerOne);
         for (var j = 0; j < randomArray.length; j++) {
             var dex = randomArray[j];
-            //console.log("dex = " + dex);
-            //console.log("gridArray[dex].classe = " + gridArray[dex].classe);
             var posXPlayerTwo  = gridArray[dex].x;
             var posYPlayerTwo = gridArray[dex].y;        
-            
-            var ecartX = Math.abs(posXPlayerTwo - playerOne.x);
+            var ecartX = Math.abs(posXPlayerTwo - playerOne.x);// Math.abs() renvoie la valeur absolue d'un nombre ou d'une expression
             var ecartY = Math.abs(posYPlayerTwo - playerOne.y);
-            console.log("verification = " + ((ecartX < 240) && (ecartY < 240)));
+            //console.log("verification = " + ((ecartX < 240) && (ecartY < 240)));
             if ((ecartX < 240) && (ecartY < 240)) {
                 newItem = Math.floor(Math.random() * 100);
                 console.log("newItem = " + newItem);
@@ -166,10 +157,10 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
         console.log("espacementY = " + (Math.abs(playerOne.y - playerTwo.y)));
     };
     
-
+// fonction d'affichage des éléments du tableau
     function intervalDraw(){
         var map = document.getElementById('map');
-        while (map.firstChild) {
+        while (map.firstChild) {// vidage de la zone de jeu de son contenu
             map.removeChild(map.firstChild);
           }
         for (var i = 0; i < gridArray.length; i++) {
@@ -179,10 +170,11 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
             boxDiv.className = gridArray[i].classe;            
             map.appendChild(boxDiv);            
         }
-        console.log("+1");
+        console.log("Refresh");
 
     }
     var intervalID;
+// methode objet de raffraichissment de l'affichage toutes les 500 millisecondes:
     Grid.prototype.draw = function(){
         intervalID = setInterval(intervalDraw, 500);
     }

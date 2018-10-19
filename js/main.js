@@ -1,10 +1,10 @@
 $(function(){
     $('#generateMap').click(function(){ //event listener
-        gridArray.splice(0, 100);
-        var grid = new Grid("myMap");
-        grid.createElements();
-        console.log(gridArray);
-        grid.draw();
+        gridArray.splice(0, 100);// on nettoie le tableau des objets
+        var grid = new Grid("myMap"); // on crée une nouvelle map
+        grid.createElements(); // on y place les éléments (pierres, armes, personnages)
+        console.log(gridArray); // contrôle du bon remplissage du tableau
+        grid.draw(); // On affiche les objets créés
         var playerOne;
         var playerTwo;
         // Recupération des objets Player dans des variables
@@ -16,8 +16,9 @@ $(function(){
             }
         }
         
-        playerOne.animate();// appelle la fonction sur l'objet Player, ne pas faire de second appel pour playerTwo, sinon on lance deux fois la fonction sur les mêmes objets!
+        playerOne.animate();// appelle la fonction sur l'objet Player, ne pas faire de second appel pour playerTwo, sinon on lance deux fois la fonction sur les mêmes objets (et on double les valeurs de deplacement!)
 
-        $('#generateMap').hide();
+        $('#generateMap').hide();  //Masquage du bouton 
+    
     })
 })
