@@ -3,6 +3,7 @@ var randomArray = [];
 
 function Grid(name) {
     this.name = name;
+    this.array = gridArray;
 
 }
 Grid.prototype.createElements = function () { //placement des cases "grass"
@@ -80,7 +81,7 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
     function createPlayer(classe) {
         tirage(100);
         check();
-        console.log(classe);
+        //console.log(classe);
         if (classe === "playerTwo"){
             checkEspacement();
         } else {}
@@ -101,24 +102,23 @@ Grid.prototype.createElements = function () { //placement des cases "grass"
                 playerOne = gridArray[k];
             }
         }
-        console.log("playerOne = " + playerOne);
+        //console.log("playerOne = " + playerOne);
         for (var j = 0; j < randomArray.length; j++) {
             var dex = randomArray[j];
-            console.log("dex = " + dex);
-            console.log("gridArray[dex].classe = " + gridArray[dex].classe);
+            //console.log("dex = " + dex);
+            //console.log("gridArray[dex].classe = " + gridArray[dex].classe);
             var posXPlayerTwo  = gridArray[dex].x;
             var posYPlayerTwo = gridArray[dex].y;        
             
             var ecartX = Math.abs(posXPlayerTwo - playerOne.x);
             var ecartY = Math.abs(posYPlayerTwo - playerOne.y);
-            
-            if (ecartX < 240 && ecartY < 240) {
+            console.log("verification = " + ((ecartX < 240) && (ecartY < 240)));
+            if ((ecartX < 240) && (ecartY < 240)) {
                 newItem = Math.floor(Math.random() * 100);
                 console.log("newItem = " + newItem);
-                console.log("j = " + j);
                 randomArray.splice(j, 1, newItem);
                 checkEspacement();
-            }
+            }else {}
         }
     }
     // comptage des objets créés (uniquement pour contrôle)
