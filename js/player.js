@@ -12,6 +12,7 @@ function Player(classe, x, y) {
     this.animate = function(){
         var plop = new Audio('media/plop.mp3');
         function plopPlay(){
+            plop.volume = 0.1;
             plop.play();
         }
         $(document).keydown(function(e){           
