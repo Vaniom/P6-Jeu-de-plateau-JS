@@ -10,8 +10,11 @@ function Player(classe, x, y) {
     this.moveCount = 0;
     this.equiped = "epée en bois";
     this.animate = function(){
-        
-        $(document).keydown(function(e){
+        var plop = new Audio('media/plop.mp3');
+        function plopPlay(){
+            plop.play();
+        }
+        $(document).keydown(function(e){           
             if(e.which == 39){// ASCII Right arrow
                 var here;
                 for (var m = 0; m < gridArray.length; m++){
@@ -28,6 +31,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here + 1, 1, playerOne);
                         gridArray.splice(here, 1, grassNew);
                         playerOne.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerOne.x = " + playerOne.x); 
@@ -48,6 +52,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here - 1, 1, playerOne);
                         gridArray.splice(here, 1, grassNew);
                         playerOne.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerOne.x = " + playerOne.x); 
@@ -69,6 +74,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here - 10, 1, playerOne);
                         gridArray.splice(here, 1, grassNew);
                         playerOne.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerOne.y = " + playerOne.y); 
@@ -90,6 +96,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here + 10, 1, playerOne);
                         gridArray.splice(here, 1, grassNew);
                         playerOne.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerOne.y = " + playerOne.y); 
@@ -111,6 +118,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here + 1, 1, playerTwo);
                         gridArray.splice(here, 1, grassNew);
                         playerTwo.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerOne.x = " + playerTwo.x); 
@@ -131,6 +139,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here - 1, 1, playerTwo);
                         gridArray.splice(here, 1, grassNew);
                         playerTwo.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerTwo.x = " + playerTwo.x); 
@@ -151,6 +160,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here - 10, 1, playerTwo);
                         gridArray.splice(here, 1, grassNew);
                         playerTwo.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerTwo.y = " + playerTwo.y); 
@@ -171,6 +181,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here + 10, 1, playerTwo);
                         gridArray.splice(here, 1, grassNew);
                         playerTwo.moveCount++;
+                        plopPlay()
                     }else {}
                 }else{}
                 console.log("playerTwo.y = " + playerTwo.y); 
