@@ -11,7 +11,7 @@ function Grid(name) {
 //placement des cases "grass"
 Grid.prototype.createElements = function () { 
     for (var i = 0; i < 10; i++) { //variable i boucle sur les abscisses
-        for (var j = 0; j < 10; j++) { // variable j boucle sur les ordonnées 
+        for (var j = 0; j < 10; j++) { // variable j boucle sur les ordonnées
             var box = new Box("grass", j * 60, i * 60);
             gridArray.push(box);
         }
