@@ -14,6 +14,7 @@ function Player(classe, x, y) {
         $('.plopAudio').trigger('load');
 
         function plopPlay() { // fonction d'appel du fichier audio créé
+        $('.plopAudio').volume = 0.1;
             $('.plopAudio').trigger('play');
         }
 
@@ -102,7 +103,7 @@ function Player(classe, x, y) {
                         gridArray.splice(here + 1, 1, playerOne);
                         gridArray.splice(here, 1, grassNew);
                         playerOne.moveCount++;
-                        plopPlay()
+                        plopPlay();
                     }
                     
                     console.log("playerOne.x = " + playerOne.x);
@@ -115,6 +116,30 @@ function Player(classe, x, y) {
                             playerOne = gridArray[m];
                         }
                     }
+                    if (gridArray[here - 1].path === true) {
+                        playerOne.x = playerOne.x - 60;                    
+
+                        changePath(here + 1);
+                        changePath(here + 2);
+                        changePath(here + 3);
+                        changePath(here + 10);
+                        changePath(here + 20);
+                        changePath(here + 30);
+                        changePath(here - 10);
+                        changePath(here - 20);
+                        changePath(here - 30);
+                       
+                        var grassNew = new Box("grass", playerOne.x, playerOne.y);
+                        grassNew.path = false;
+                        gridArray.splice(here - 1, 1, playerOne);
+                        gridArray.splice(here, 1, grassNew);
+                        playerOne.moveCount++;
+                        plopPlay();
+                    }
+                    
+                    console.log("playerOne.x = " + playerOne.x);
+                    console.log("compteur = " + playerOne.moveCount);
+                    /*
                     console.log("here = " + here);
                     if (playerOne.x > 0) {
                         if (gridArray[here - 1].accessible === true) {
@@ -128,7 +153,7 @@ function Player(classe, x, y) {
                     } else {}
                     console.log("playerOne.x = " + playerOne.x);
                     console.log("compteur = " + playerOne.moveCount);
-
+                    */
                 } else if (e.which == 38) { // Fleche UP
                     var here;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -137,6 +162,27 @@ function Player(classe, x, y) {
                             playerOne = gridArray[m];
                         }
                     }
+                    if (gridArray[here - 10].path === true) {
+                        playerOne.y = playerOne.y - 60;                    
+
+                        changePath(here + 1);
+                        changePath(here + 2);
+                        changePath(here + 3);
+                        changePath(here + 10);
+                        changePath(here + 20);
+                        changePath(here + 30);
+                        changePath(here - 1);
+                        changePath(here - 2);
+                        changePath(here - 3);
+                       
+                        var grassNew = new Box("grass", playerOne.x, playerOne.y);
+                        grassNew.path = false;
+                        gridArray.splice(here - 10, 1, playerOne);
+                        gridArray.splice(here, 1, grassNew);
+                        playerOne.moveCount++;
+                        plopPlay();
+                    }
+                    /*
                     console.log("here = " + here);
                     if (playerOne.y > 0) {
                         if (gridArray[here - 10].accessible === true) {
@@ -148,6 +194,7 @@ function Player(classe, x, y) {
                             plopPlay()
                         } else {}
                     } else {}
+                    */
                     console.log("playerOne.y = " + playerOne.y);
                     console.log("compteur = " + playerOne.moveCount);
 
@@ -159,6 +206,27 @@ function Player(classe, x, y) {
                             playerOne = gridArray[m];
                         }
                     }
+                    if (gridArray[here + 10].path === true) {
+                        playerOne.y = playerOne.y + 60;                    
+
+                        changePath(here + 1);
+                        changePath(here + 2);
+                        changePath(here + 3);
+                        changePath(here - 1);
+                        changePath(here - 2);
+                        changePath(here - 3);
+                        changePath(here - 10);
+                        changePath(here - 20);
+                        changePath(here - 30);
+                       
+                        var grassNew = new Box("grass", playerOne.x, playerOne.y);
+                        grassNew.path = false;
+                        gridArray.splice(here + 10, 1, playerOne);
+                        gridArray.splice(here, 1, grassNew);
+                        playerOne.moveCount++;
+                        plopPlay()
+                    }
+                    /*
                     console.log("here = " + here);
                     if (playerOne.y < 540) {
                         if (gridArray[here + 10].accessible === true) {
@@ -170,6 +238,7 @@ function Player(classe, x, y) {
                             plopPlay()
                         } else {}
                     } else {}
+                    */
                     console.log("playerOne.y = " + playerOne.y);
                     console.log("compteur = " + playerOne.moveCount);
                 }                
