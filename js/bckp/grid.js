@@ -1,7 +1,5 @@
 var gridArray = [];
 var randomArray = [];
-var playerOne;
-var playerTwo;
 
 function Grid(name) {
     this.name = name;
@@ -94,7 +92,7 @@ Grid.prototype.createElements = function () {
 
 // Fonction qui vérifie l'espacement x et y entre les deux personnages:
     function checkEspacement() {
-        //var playerOne;
+        var playerOne;
         for (var k = 0; k < gridArray.length; k++){
             if(gridArray[k].classe === "playerOne"){
                 playerOne = gridArray[k];
@@ -146,8 +144,8 @@ Grid.prototype.createElements = function () {
     
     // Contrôle de l'espacement entre les deux joueurs (affichage console)
     function PrintEspace(){
-        //var playerOne;
-        //var playerTwo;
+        var playerOne;
+        var playerTwo;
         for (var l = 0; l < gridArray.length; l++){
             if(gridArray[l].classe === "playerOne"){
                 playerOne = gridArray[l];
@@ -158,7 +156,6 @@ Grid.prototype.createElements = function () {
         console.log("espacementX = " + (Math.abs(playerOne.x - playerTwo.x)));
         console.log("espacementY = " + (Math.abs(playerOne.y - playerTwo.y)));
     };
-}
     
 // fonction d'affichage des éléments du tableau
     function intervalDraw(){
@@ -170,13 +167,7 @@ Grid.prototype.createElements = function () {
             var boxDiv = document.createElement('div');            
             boxDiv.style.left = this.x + "px";
             boxDiv.style.top = this.y + "px";
-            boxDiv.className = gridArray[i].classe;
-            if(gridArray[i].path === true){
-                boxDiv.classList.add("pathTrue");
-            }
-            if(gridArray[i].active === true){
-                boxDiv.classList.add("active");
-            }          
+            boxDiv.className = gridArray[i].classe;            
             map.appendChild(boxDiv);            
         }
         console.log("Refresh");
@@ -187,21 +178,4 @@ Grid.prototype.createElements = function () {
     Grid.prototype.draw = function(){
         intervalID = setInterval(intervalDraw, 500);
     }
-
-    Grid.prototype.flipCoin = function(){
-        //var coin = Math.floor(Math.random() * 2);
-        var coin = 0;
-        console.log("coin = " + coin);
-        var message = document.createElement('p');
-        if(coin === 0){
-            playerOne.active = true;            
-            message.textContent = "Steve commence ! ";
-            $('#log').append(message);
-        }else {
-            playerTwo.active = true;
-            message.textContent = "Link commence ! ";
-            $('#log').append(message);
-        }
-        console.log("playerOne.active = " + playerOne.active);
-        console.log("playerTwo.active = " + playerTwo.active);
-    }
+}

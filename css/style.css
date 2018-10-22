@@ -7,6 +7,21 @@
     display: flex;
     flex-wrap: wrap;
 }
+#log {
+    background-color: black;
+    color: #04e810;
+    height: 140px;
+    width: 560px;
+    margin-top: 30px;
+    padding: 20px;
+    display: none;
+}
+.initMessage{
+    color: yellowgreen;
+    font-size: 2rem;
+    margin: 5px;
+    text-align: center;
+}
 
 .grass {
     background-image: url("../media/grass.png");
@@ -79,4 +94,11 @@
     background-position: center;
     height: 60px;
     width: 60px;
+}
+.pathTrue {
+   filter: contrast(200%);
+   z-index: 50;
+}
+.active {
+    filter: contrast(200%);
 }
