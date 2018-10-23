@@ -190,8 +190,8 @@ Grid.prototype.createElements = function () {
     }
 
     Grid.prototype.flipCoin = function(){
-        //var coin = Math.floor(Math.random() * 2);
-        var coin = 0;
+        var coin = Math.floor(Math.random() * 2);
+        //var coin = 0;
         console.log("coin = " + coin);
         var message = document.createElement('p');
         if(coin === 0){

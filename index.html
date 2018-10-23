@@ -7,24 +7,65 @@
     </head>
     
     <body>
-        <input type="button" class="audioBtn" id="audioOn" name="audioOn" value= "Music ON" />
-        <input type="button" class="audioBtn" id="audioOff" name="audioOff" value= "Music OFF" />
-        <input type="button" id="initBtn" name="initBtn" value="Entrer dans le jeu" />
-        <div id="cadreMap">
-        <div id="map"></div>
-        </div>
-        <div id="cadreLog">
-        <div id="log"></div> 
-        </div>
-        <audio class="plopAudio" preload="none">
-            <source src="media/plop.mp3" type="audio/mpeg">
-            <source src="audio/plop.ogg" type="audio/ogg">
-        </audio>
-        <audio class="openingAudio" preload="none" autoplay="true" loop>
-            <source src="media/music.mp3" type="audio/mpeg">
-        </audio>
+        <div id="main">
+            <input type="button" class="audioBtn" id="audioOn" name="audioOn" value= "Music ON" />
+            <input type="button" class="audioBtn" id="audioOff" name="audioOff" value= "Music OFF" />
+            
+            <div id="cadreMap">
+                <div id="map"></div>
+            </div>
+            <div id="perso1">
+                <div id="insidePerso1" class="insidePerso">
+                    <div id="imgProfilPerso1" class="imgProfilPerso">
+                    </div>
+                    <div id="infoPerso1" class="infoPerso">
+                        <h3>Joueur 1: Steve</h3>
+                        <h3>Points de vie: </h3><span id="pdv1"></span>
+                    </div>
+                    <div id="armePerso1" class="armePerso">
+                        <h3>Arme equipée: </h3><span id="arme1"></span>
+                    </div>
+                    <div id="attackPerso1" class="attackPerso">
+                        <h3>Attaque (K)</h3>
+                    </div>
+                    <div id="defendPerso1" class="defendPerso">
+                        <h3>Défense (M)</h3>
+                    </div>
+                </div>
+            </div>
+            <div id="perso2">
+                    <div id="insidePerso2" class="insidePerso">
+                        <div id="imgProfilPerso2" class="imgProfilPerso">
+                        </div>
+                        <div id="infoPerso2" class="infoPerso">
+                            <h3>Joueur 2: Link</h3>
+                            <h3>Points de vie: </h3><span id="pdv2"></span>
+                        </div>
+                        <div id="armePerso2" class="armePerso">
+                            <h3>Arme equipée: </h3><span id="arme2"></span>
+                        </div>
+                        <div id="attackPerso2" class="attackPerso">
+                            <h3>Attaque (Q)</h3>
+                        </div>
+                        <div id="defendPerso2" class="defendPerso">
+                            <h3>Défense (D)</h3>
+                        </div>
+                    </div>
+                </div>
+            <div id="cadreLog">
+                <div id="log"></div> 
+            </div>
         
-        <input type="button" id="generateMap" name="generatemap" value="Commencer ! " />
+            <audio class="plopAudio" preload="none">
+                <source src="media/plop.mp3" type="audio/mpeg">
+                <source src="audio/plop.ogg" type="audio/ogg">
+            </audio>
+            <audio class="openingAudio" preload="none" autoplay="true" loop>
+                <source src="media/music.mp3" type="audio/mpeg">
+            </audio>
+            
+            <input type="button" id="generateMap" name="generatemap" value="Commencer ! " />
+        </div>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/grid.js"></script>

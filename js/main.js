@@ -20,13 +20,7 @@ $(function(){
         $('#audioOff').hide();
         $('#audioOn').show();
     })
-    $('#initBtn').click(function(){
-        playOpening();
-        $('#cadreMap').show();
-        $('#audioOff').show();
-        $('#initBtn').hide();
-        $('#generateMap').show();
-    })
+    
     $('#generateMap').click(function(){ //event listener
         gridArray.splice(0, 100);// on nettoie le tableau des objets
         var grid = new Grid("myMap"); // on crée une nouvelle map
@@ -48,6 +42,11 @@ $(function(){
 
         $('#generateMap').hide();  //Masquage du bouton
         $('#cadreLog').show();
+        $('#perso1').show();
+        $('#perso2').show();
+        playOpening();
+        $('#audioOff').show();
+        $('#log').html("<p>Joueur 1: Utiliser les flèches pour se déplacer, touche Entrée pour finir.</p><p>Joueur 2: Touches A Z E S pour se déplacer, Espace pour finir.</p>");
         setTimeout(grid.flipCoin, 1000);    
     })
 })
