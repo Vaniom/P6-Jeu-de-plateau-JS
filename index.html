@@ -7,15 +7,24 @@
     </head>
     
     <body>
-        
+        <input type="button" class="audioBtn" id="audioOn" name="audioOn" value= "Music ON" />
+        <input type="button" class="audioBtn" id="audioOff" name="audioOff" value= "Music OFF" />
+        <input type="button" id="initBtn" name="initBtn" value="Entrer dans le jeu" />
+        <div id="cadreMap">
         <div id="map"></div>
+        </div>
+        <div id="cadreLog">
         <div id="log"></div> 
+        </div>
         <audio class="plopAudio" preload="none">
             <source src="media/plop.mp3" type="audio/mpeg">
             <source src="audio/plop.ogg" type="audio/ogg">
         </audio>
+        <audio class="openingAudio" preload="none" autoplay="true" loop>
+            <source src="media/music.mp3" type="audio/mpeg">
+        </audio>
         
-        <input type="button" id="generateMap" name="generatemap" value="Commencer!" />
+        <input type="button" id="generateMap" name="generatemap" value="Commencer ! " />
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/grid.js"></script>

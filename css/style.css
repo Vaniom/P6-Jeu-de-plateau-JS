@@ -1,26 +1,61 @@
+body {
+    background-color: yellow;
+}
 #map {
     background-color: grey;
     height: 600px;
     width: 600px;
     overflow: hidden;
-    margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+#cadreMap {
+    background-color: grey;
+    height: 650px;
+    width: 650px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: none;
+}
+#cadreLog {
+    background-color: brown;
+    height: 190px;
+    width: 650px;   
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: none;
 }
 #log {
     background-color: black;
     color: #04e810;
-    height: 140px;
+    height: 100px;
     width: 560px;
-    margin-top: 30px;
+    margin-top: 25px;
+    margin-left: 25px;
     padding: 20px;
+}
+#audioOff {
     display: none;
 }
+#audioOn {
+    display: none;
+}
+#generateMap {
+    display: none;
+}
+.audioBtn {
+    margin-bottom: 15px;
+}
 .initMessage{
-    color: yellowgreen;
-    font-size: 2rem;
-    margin: 5px;
-    text-align: center;
+    height: 600px;
+    width: 600px;
+    background-image: url('../media/opening.png');
+    background-size: 160%;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 60;
 }
 
 .grass {
