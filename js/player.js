@@ -8,14 +8,8 @@ function Player(classe, x, y) {
     this.y = y;
     this.pdv = 100;
     this.moveCount = 0;
-    this.equiped = "epée en bois";
-<<<<<<< HEAD
-    this.animate = function(){
-        var plop = new Audio('media/plop.mp3');
-        function plopPlay(){
-            plop.volume = 0.1;
-            plop.play();
-=======
+    this.equiped = "epeeBois";
+    this.damage = 15;
     this.active = false;
     this.animate = function () {
         $('.plopAudio').trigger('load');
@@ -79,21 +73,19 @@ function Player(classe, x, y) {
                     } else {}
                 } else {}
             } else {}
->>>>>>> bb7d294f2f852103becadd729422db803da63265
         }
-
-        //console.log("herelà = " + here);
        
-            
-
-        path(here);
+          if(playerOne.active === true){
+              path(here);
+          }else if(playerTwo.active === true){
+              path(hereTwo);
+          }
 
         function changePath(index) {
             if (typeof (gridArray[index]) != 'undefined') {
                 gridArray[index].path = false;
             }
         }
-        
 //------------------------------------------------------------------------------------------------//
         $(document).keydown(function (e) {
             if (playerOne.active === true) {
@@ -106,24 +98,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[here + 1].path === true) {
-                        playerOne.x = playerOne.x + 60;                    
-
-                        changePath(here - 1);
-                        changePath(here - 2);
-                        changePath(here - 3);
-                        changePath(here + 10);
-                        changePath(here + 20);
-                        changePath(here + 30);
-                        changePath(here - 10);
-                        changePath(here - 20);
-                        changePath(here - 30);
-                    
-                        var grassNew = new Box("grass", playerOne.x, playerOne.y);
-                        grassNew.path = false;
-                        gridArray.splice(here + 1, 1, playerOne);
-                        gridArray.splice(here, 1, grassNew);
-                        playerOne.moveCount++;
-                        plopPlay();
+                        if (gridArray[here + 1].weapon === true) {
+                            var previousWeapon = playerOne.equiped;
+                            var previousDamage = playerOne.damage;
+                            var newWeapon = gridArray[here + 1].classe;
+                            var newDamage = gridArray[here + 1].damage;
+                            playerOne.x = playerOne.x + 60;
+                            changePath(here - 1);
+                            changePath(here - 2);
+                            changePath(here - 3);
+                            changePath(here + 10);
+                            changePath(here + 20);
+                            changePath(here + 30);
+                            changePath(here - 10);
+                            changePath(here - 20);
+                            changePath(here - 30);
+                            var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(here + 1, 1, playerOne);
+                            playerOne.equiped = newWeapon;
+                            playerOne.damage = newDamage;
+                            gridArray.splice(here, 1, weaponDeposit);
+                            playerOne.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerOne.x = playerOne.x + 60;             
+                            changePath(here - 1);
+                            changePath(here - 2);
+                            changePath(here - 3);
+                            changePath(here + 10);
+                            changePath(here + 20);
+                            changePath(here + 30);
+                            changePath(here - 10);
+                            changePath(here - 20);
+                            changePath(here - 30);
+                        
+                            var grassNew = new Box("grass", playerOne.x, playerOne.y);
+                            grassNew.path = false;
+                            gridArray.splice(here + 1, 1, playerOne);
+                            gridArray.splice(here, 1, grassNew);
+                            playerOne.moveCount++;
+                            plopPlay();
+                        }
+                        
                     }
                     
                     console.log("playerOne.x = " + playerOne.x);
@@ -137,24 +154,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[here - 1].path === true) {
-                        playerOne.x = playerOne.x - 60;                    
+                        if (gridArray[here - 1].weapon === true) {
+                            var previousWeapon = playerOne.equiped;
+                            var previousDamage = playerOne.damage;
+                            var newWeapon = gridArray[here - 1].classe;
+                            var newDamage = gridArray[here - 1].damage;
+                            playerOne.x = playerOne.x - 60;
+                            changePath(here + 1);
+                            changePath(here + 2);
+                            changePath(here + 3);
+                            changePath(here + 10);
+                            changePath(here + 20);
+                            changePath(here + 30);
+                            changePath(here - 10);
+                            changePath(here - 20);
+                            changePath(here - 30);
+                            var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(here - 1, 1, playerOne);
+                            playerOne.equiped = newWeapon;
+                            playerOne.damage = newDamage;
+                            gridArray.splice(here, 1, weaponDeposit);
+                            playerOne.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerOne.x = playerOne.x - 60;                    
 
-                        changePath(here + 1);
-                        changePath(here + 2);
-                        changePath(here + 3);
-                        changePath(here + 10);
-                        changePath(here + 20);
-                        changePath(here + 30);
-                        changePath(here - 10);
-                        changePath(here - 20);
-                        changePath(here - 30);
-                    
-                        var grassNew = new Box("grass", playerOne.x, playerOne.y);
-                        grassNew.path = false;
-                        gridArray.splice(here - 1, 1, playerOne);
-                        gridArray.splice(here, 1, grassNew);
-                        playerOne.moveCount++;
-                        plopPlay();
+                            changePath(here + 1);
+                            changePath(here + 2);
+                            changePath(here + 3);
+                            changePath(here + 10);
+                            changePath(here + 20);
+                            changePath(here + 30);
+                            changePath(here - 10);
+                            changePath(here - 20);
+                            changePath(here - 30);
+                        
+                            var grassNew = new Box("grass", playerOne.x, playerOne.y);
+                            grassNew.path = false;
+                            gridArray.splice(here - 1, 1, playerOne);
+                            gridArray.splice(here, 1, grassNew);
+                            playerOne.moveCount++;
+                            plopPlay();
+                        }
                     }
                     
                     console.log("playerOne.x = " + playerOne.x);
@@ -169,24 +211,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[here - 10].path === true) {
-                        playerOne.y = playerOne.y - 60;                    
+                        if (gridArray[here - 10].weapon === true) {
+                            var previousWeapon = playerOne.equiped;
+                            var previousDamage = playerOne.damage;
+                            var newWeapon = gridArray[here - 10].classe;
+                            var newDamage = gridArray[here - 10].damage;
+                            playerOne.y = playerOne.y - 60;
+                            changePath(here - 1);
+                            changePath(here - 2);
+                            changePath(here - 3);
+                            changePath(here + 10);
+                            changePath(here + 20);
+                            changePath(here + 30);
+                            changePath(here + 1);
+                            changePath(here + 2);
+                            changePath(here + 3);
+                            var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(here - 10, 1, playerOne);
+                            playerOne.equiped = newWeapon;
+                            playerOne.damage = newDamage;
+                            gridArray.splice(here, 1, weaponDeposit);
+                            playerOne.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerOne.y = playerOne.y - 60;                    
 
-                        changePath(here + 1);
-                        changePath(here + 2);
-                        changePath(here + 3);
-                        changePath(here + 10);
-                        changePath(here + 20);
-                        changePath(here + 30);
-                        changePath(here - 1);
-                        changePath(here - 2);
-                        changePath(here - 3);
-                    
-                        var grassNew = new Box("grass", playerOne.x, playerOne.y);
-                        grassNew.path = false;
-                        gridArray.splice(here - 10, 1, playerOne);
-                        gridArray.splice(here, 1, grassNew);
-                        playerOne.moveCount++;
-                        plopPlay();
+                            changePath(here + 1);
+                            changePath(here + 2);
+                            changePath(here + 3);
+                            changePath(here + 10);
+                            changePath(here + 20);
+                            changePath(here + 30);
+                            changePath(here - 1);
+                            changePath(here - 2);
+                            changePath(here - 3);
+                        
+                            var grassNew = new Box("grass", playerOne.x, playerOne.y);
+                            grassNew.path = false;
+                            gridArray.splice(here - 10, 1, playerOne);
+                            gridArray.splice(here, 1, grassNew);
+                            playerOne.moveCount++;
+                            plopPlay();
+                        }
                     }
                 
                     console.log("playerOne.y = " + playerOne.y);
@@ -201,24 +268,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[here + 10].path === true) {
-                        playerOne.y = playerOne.y + 60;                    
+                        if (gridArray[here + 10].weapon === true) {
+                            var previousWeapon = playerOne.equiped;
+                            var previousDamage = playerOne.damage;
+                            var newWeapon = gridArray[here + 10].classe;
+                            var newDamage = gridArray[here + 10].damage;
+                            playerOne.y = playerOne.y + 60;
+                            changePath(here - 1);
+                            changePath(here - 2);
+                            changePath(here - 3);
+                            changePath(here + 1);
+                            changePath(here + 2);
+                            changePath(here + 3);
+                            changePath(here - 10);
+                            changePath(here - 20);
+                            changePath(here - 30);
+                            var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(here + 10, 1, playerOne);
+                            playerOne.equiped = newWeapon;
+                            playerOne.damage = newDamage;
+                            gridArray.splice(here, 1, weaponDeposit);
+                            playerOne.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerOne.y = playerOne.y + 60;                    
 
-                        changePath(here + 1);
-                        changePath(here + 2);
-                        changePath(here + 3);
-                        changePath(here - 1);
-                        changePath(here - 2);
-                        changePath(here - 3);
-                        changePath(here - 10);
-                        changePath(here - 20);
-                        changePath(here - 30);
-                    
-                        var grassNew = new Box("grass", playerOne.x, playerOne.y);
-                        grassNew.path = false;
-                        gridArray.splice(here + 10, 1, playerOne);
-                        gridArray.splice(here, 1, grassNew);
-                        playerOne.moveCount++;
-                        plopPlay()
+                            changePath(here + 1);
+                            changePath(here + 2);
+                            changePath(here + 3);
+                            changePath(here - 1);
+                            changePath(here - 2);
+                            changePath(here - 3);
+                            changePath(here - 10);
+                            changePath(here - 20);
+                            changePath(here - 30);
+                        
+                            var grassNew = new Box("grass", playerOne.x, playerOne.y);
+                            grassNew.path = false;
+                            gridArray.splice(here + 10, 1, playerOne);
+                            gridArray.splice(here, 1, grassNew);
+                            playerOne.moveCount++;
+                            plopPlay()
+                        }
                     }
                 
                     console.log("playerOne.y = " + playerOne.y);
@@ -258,7 +350,6 @@ function Player(classe, x, y) {
         //-----------------On passe au joueur 2-----------------//
 
             }else if (playerTwo.active === true) {
-
                 console.log("hereTwo = " + hereTwo);                    
                 if (e.which == 69) { //Touche E
                     var hereTwo;
@@ -269,24 +360,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[hereTwo + 1].path === true) {
-                        playerTwo.x = playerTwo.x + 60;                    
+                        if (gridArray[hereTwo + 1].weapon === true) {
+                            var previousWeapon = playerTwo.equiped;
+                            var previousDamage = playerTwo.damage;
+                            var newWeapon = gridArray[hereTwo + 1].classe;
+                            var newDamage = gridArray[hereTwo + 1].damage;
+                            playerTwo.x = playerTwo.x + 60;
+                            changePath(hereTwo - 1);
+                            changePath(hereTwo - 2);
+                            changePath(hereTwo - 3);
+                            changePath(hereTwo + 10);
+                            changePath(hereTwo + 20);
+                            changePath(hereTwo + 30);
+                            changePath(hereTwo - 10);
+                            changePath(hereTwo - 20);
+                            changePath(hereTwo - 30);
+                            var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(hereTwo + 1, 1, playerTwo);
+                            playerTwo.equiped = newWeapon;
+                            playerTwo.damage = newDamage;
+                            gridArray.splice(hereTwo, 1, weaponDeposit);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerTwo.x = playerTwo.x + 60;                    
 
-                        changePath(hereTwo - 1);
-                        changePath(hereTwo - 2);
-                        changePath(hereTwo - 3);
-                        changePath(hereTwo + 10);
-                        changePath(hereTwo + 20);
-                        changePath(hereTwo + 30);
-                        changePath(hereTwo - 10);
-                        changePath(hereTwo - 20);
-                        changePath(hereTwo - 30);
-                    
-                        var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
-                        grassNew.path = false;
-                        gridArray.splice(hereTwo + 1, 1, playerTwo);
-                        gridArray.splice(hereTwo, 1, grassNew);
-                        playerTwo.moveCount++;
-                        plopPlay();
+                            changePath(hereTwo - 1);
+                            changePath(hereTwo - 2);
+                            changePath(hereTwo - 3);
+                            changePath(hereTwo + 10);
+                            changePath(hereTwo + 20);
+                            changePath(hereTwo + 30);
+                            changePath(hereTwo - 10);
+                            changePath(hereTwo - 20);
+                            changePath(hereTwo - 30);
+                        
+                            var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
+                            grassNew.path = false;
+                            gridArray.splice(hereTwo + 1, 1, playerTwo);
+                            gridArray.splice(hereTwo, 1, grassNew);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }
                     }
                     console.log("playerTwo.x = " + playerTwo.x);
                     console.log("compteur = " + playerTwo.moveCount);
@@ -299,24 +415,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[hereTwo - 1].path === true) {
-                        playerTwo.x = playerTwo.x - 60;                    
+                        if (gridArray[hereTwo - 1].weapon === true) {
+                            var previousWeapon = playerTwo.equiped;
+                            var previousDamage = playerTwo.damage;
+                            var newWeapon = gridArray[hereTwo - 1].classe;
+                            var newDamage = gridArray[hereTwo - 1].damage;
+                            playerTwo.x = playerTwo.x + 60;
+                            changePath(hereTwo + 1);
+                            changePath(hereTwo + 2);
+                            changePath(hereTwo + 3);
+                            changePath(hereTwo + 10);
+                            changePath(hereTwo + 20);
+                            changePath(hereTwo + 30);
+                            changePath(hereTwo - 10);
+                            changePath(hereTwo - 20);
+                            changePath(hereTwo - 30);
+                            var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(hereTwo - 1, 1, playerTwo);
+                            playerTwo.equiped = newWeapon;
+                            playerTwo.damage = newDamage;
+                            gridArray.splice(hereTwo, 1, weaponDeposit);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerTwo.x = playerTwo.x - 60;                    
 
-                        changePath(hereTwo + 1);
-                        changePath(hereTwo + 2);
-                        changePath(hereTwo + 3);
-                        changePath(hereTwo + 10);
-                        changePath(hereTwo + 20);
-                        changePath(hereTwo + 30);
-                        changePath(hereTwo - 10);
-                        changePath(hereTwo - 20);
-                        changePath(hereTwo - 30);
-                    
-                        var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
-                        grassNew.path = false;
-                        gridArray.splice(hereTwo - 1, 1, playerTwo);
-                        gridArray.splice(hereTwo, 1, grassNew);
-                        playerTwo.moveCount++;
-                        plopPlay();
+                            changePath(hereTwo + 1);
+                            changePath(hereTwo + 2);
+                            changePath(hereTwo + 3);
+                            changePath(hereTwo + 10);
+                            changePath(hereTwo + 20);
+                            changePath(hereTwo + 30);
+                            changePath(hereTwo - 10);
+                            changePath(hereTwo - 20);
+                            changePath(hereTwo - 30);
+                        
+                            var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
+                            grassNew.path = false;
+                            gridArray.splice(hereTwo - 1, 1, playerTwo);
+                            gridArray.splice(hereTwo, 1, grassNew);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }
                     }
                     console.log("playerTwo.x = " + playerTwo.x);
                     console.log("compteur = " + playerTwo.moveCount);
@@ -329,24 +470,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[hereTwo - 10].path === true) {
-                        playerTwo.y = playerTwo.y - 60;                    
+                        if (gridArray[hereTwo - 10].weapon === true) {
+                            var previousWeapon = playerTwo.equiped;
+                            var previousDamage = playerTwo.damage;
+                            var newWeapon = gridArray[hereTwo - 10].classe;
+                            var newDamage = gridArray[hereTwo - 10].damage;
+                            playerTwo.y = playerTwo.y - 60;
+                            changePath(hereTwo - 1);
+                            changePath(hereTwo - 2);
+                            changePath(hereTwo - 3);
+                            changePath(hereTwo + 10);
+                            changePath(hereTwo + 20);
+                            changePath(hereTwo + 30);
+                            changePath(hereTwo + 1);
+                            changePath(hereTwo + 2);
+                            changePath(hereTwo + 3);
+                            var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(hereTwo - 10, 1, playerTwo);
+                            playerTwo.equiped = newWeapon;
+                            playerTwo.damage = newDamage;
+                            gridArray.splice(hereTwo, 1, weaponDeposit);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerTwo.y = playerTwo.y - 60;                    
 
-                        changePath(hereTwo + 1);
-                        changePath(hereTwo + 2);
-                        changePath(hereTwo + 3);
-                        changePath(hereTwo + 10);
-                        changePath(hereTwo + 20);
-                        changePath(hereTwo + 30);
-                        changePath(hereTwo - 1);
-                        changePath(hereTwo - 2);
-                        changePath(hereTwo - 3);
-                    
-                        var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
-                        grassNew.path = false;
-                        gridArray.splice(hereTwo - 10, 1, playerTwo);
-                        gridArray.splice(hereTwo, 1, grassNew);
-                        playerTwo.moveCount++;
-                        plopPlay();
+                            changePath(hereTwo + 1);
+                            changePath(hereTwo + 2);
+                            changePath(hereTwo + 3);
+                            changePath(hereTwo + 10);
+                            changePath(hereTwo + 20);
+                            changePath(hereTwo + 30);
+                            changePath(hereTwo - 1);
+                            changePath(hereTwo - 2);
+                            changePath(hereTwo - 3);
+                        
+                            var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
+                            grassNew.path = false;
+                            gridArray.splice(hereTwo - 10, 1, playerTwo);
+                            gridArray.splice(hereTwo, 1, grassNew);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }
                     }
                     console.log("playerTwo.y = " + playerTwo.y);
                     console.log("compteur = " + playerTwo.moveCount);
@@ -360,24 +526,49 @@ function Player(classe, x, y) {
                         }
                     }
                     if (gridArray[hereTwo + 10].path === true) {
-                        playerTwo.y = playerTwo.y + 60;                    
+                        if (gridArray[hereTwo + 10].weapon === true) {
+                            var previousWeapon = playerTwo.equiped;
+                            var previousDamage = playerTwo.damage;
+                            var newWeapon = gridArray[hereTwo + 10].classe;
+                            var newDamage = gridArray[hereTwo + 10].damage;
+                            playerTwo.y = playerTwo.y + 60;
+                            changePath(hereTwo - 1);
+                            changePath(hereTwo - 2);
+                            changePath(hereTwo - 3);
+                            changePath(hereTwo - 10);
+                            changePath(hereTwo - 20);
+                            changePath(hereTwo - 30);
+                            changePath(hereTwo + 1);
+                            changePath(hereTwo + 2);
+                            changePath(hereTwo + 3);
+                            var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                            
+                            weaponDeposit.path = false;
+                            gridArray.splice(hereTwo + 10, 1, playerTwo);
+                            playerTwo.equiped = newWeapon;
+                            playerTwo.damage = newDamage;
+                            gridArray.splice(hereTwo, 1, weaponDeposit);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }else {
+                            playerTwo.y = playerTwo.y + 60;                    
 
-                        changePath(hereTwo + 1);
-                        changePath(hereTwo + 2);
-                        changePath(hereTwo + 3);
-                        changePath(hereTwo - 10);
-                        changePath(hereTwo - 20);
-                        changePath(hereTwo - 30);
-                        changePath(hereTwo - 1);
-                        changePath(hereTwo - 2);
-                        changePath(hereTwo - 3);
-                    
-                        var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
-                        grassNew.path = false;
-                        gridArray.splice(hereTwo + 10, 1, playerTwo);
-                        gridArray.splice(hereTwo, 1, grassNew);
-                        playerTwo.moveCount++;
-                        plopPlay();
+                            changePath(hereTwo + 1);
+                            changePath(hereTwo + 2);
+                            changePath(hereTwo + 3);
+                            changePath(hereTwo - 10);
+                            changePath(hereTwo - 20);
+                            changePath(hereTwo - 30);
+                            changePath(hereTwo - 1);
+                            changePath(hereTwo - 2);
+                            changePath(hereTwo - 3);
+                        
+                            var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
+                            grassNew.path = false;
+                            gridArray.splice(hereTwo + 10, 1, playerTwo);
+                            gridArray.splice(hereTwo, 1, grassNew);
+                            playerTwo.moveCount++;
+                            plopPlay();
+                        }
                     }
                     console.log("playerTwo.y = " + playerTwo.y);
                     console.log("compteur = " + playerTwo.moveCount);
@@ -410,7 +601,7 @@ function Player(classe, x, y) {
                 }
                 playerOne.active = true;
                 playerTwo.active = false;
-                path(here);// affichage du chemin possible pour playerTwo
+                path(here);// affichage du chemin possible pour playerOne
                 }
             
             }else {}
