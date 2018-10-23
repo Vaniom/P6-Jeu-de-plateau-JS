@@ -9,13 +9,6 @@ function Player(classe, x, y) {
     this.pdv = 100;
     this.moveCount = 0;
     this.equiped = "epée en bois";
-<<<<<<< HEAD
-    this.animate = function(){
-        var plop = new Audio('media/plop.mp3');
-        function plopPlay(){
-            plop.volume = 0.1;
-            plop.play();
-=======
     this.active = false;
     this.animate = function () {
         $('.plopAudio').trigger('load');
@@ -79,7 +72,6 @@ function Player(classe, x, y) {
                     } else {}
                 } else {}
             } else {}
->>>>>>> bb7d294f2f852103becadd729422db803da63265
         }
 
         //console.log("herelà = " + here);
