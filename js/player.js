@@ -8,6 +8,7 @@ function Player(classe, x, y) {
     this.y = y;
     this.pdv = 100;
     this.moveCount = 0;
+
     this.equiped = "epeeBois";
     this.damage = 15;
     this.active = false;
