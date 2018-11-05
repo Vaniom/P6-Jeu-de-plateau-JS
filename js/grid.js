@@ -1,5 +1,5 @@
 var gridArray = [];
-var randomArray = [];
+//var randomArray = [];
 var playerOne;
 var playerTwo;
 
@@ -18,6 +18,7 @@ Grid.prototype.createElements = function () {
     };
     var verif;
     var id;
+    var randomArray = [];
 //Tirage aleatoire d'un entier naturel compris entre 0 et un nombre maximum(exclu)
     function tirage(max) { 
         id = Math.floor(Math.random() * max);
@@ -189,8 +190,8 @@ Grid.prototype.createElements = function () {
     }
 
     Grid.prototype.flipCoin = function(){
-        //var coin = Math.floor(Math.random() * 2);
-        var coin = 0;
+        var coin = Math.floor(Math.random() * 2);
+        //var coin = 0;
         console.log("coin = " + coin);
         var message = document.createElement('p');
         if(coin === 0){

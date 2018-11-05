@@ -1,9 +1,26 @@
 $(function(){
     var message = document.createElement('div');
     message.className = "initMessage";
-    message.innerHTML = "<p>Joueur 1: Steve </p><p></p>Commandes: Flèches haut bas droite gauche</p><p>Joueur 2: Link</p><p>Commandes: A Z E S</p>";
+    //message.innerHTML = "<img src='media/opening.png' alt='Steve versus Link' heigth='600px' />";
     $('#map').append(message);
-
+    $('.openingAudio').trigger('load');
+    function playOpening(){
+        $('.openingAudio').trigger('play');
+    }
+    function stopOpening(){
+        $('.openingAudio').trigger('pause');
+    }
+    $('#audioOn').click(function(){
+        playOpening();
+        $('#audioOn').hide();
+        $('#audioOff').show();
+    })
+    $('#audioOff').click(function(){
+        stopOpening();
+        $('#audioOff').hide();
+        $('#audioOn').show();
+    })
+    
     $('#generateMap').click(function(){ //event listener
         gridArray.splice(0, 100);// on nettoie le tableau des objets
         var grid = new Grid("myMap"); // on crée une nouvelle map
@@ -24,8 +41,12 @@ $(function(){
         setTimeout(playerOne.animate, 2000);// appelle la fonction sur l'objet Player, ne pas faire de second appel pour playerTwo, sinon on lance deux fois la fonction sur les mêmes objets (et on double les valeurs de deplacement!)
 
         $('#generateMap').hide();  //Masquage du bouton
-        $('#log').show();
-        setTimeout(grid.flipCoin, 1000);
-    
+        $('#cadreLog').show();
+        $('#perso1').show();
+        $('#perso2').show();
+        playOpening();
+        $('#audioOff').show();
+        $('#log').html("<p>Joueur 1: Utiliser les flèches pour se déplacer, touche Entrée pour finir.</p><p>Joueur 2: Touches A Z E S pour se déplacer, Espace pour finir.</p>");
+        setTimeout(grid.flipCoin, 1000);    
     })
 })

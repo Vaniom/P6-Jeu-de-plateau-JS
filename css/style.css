@@ -1,26 +1,177 @@
+body {
+    background-color: yellow;
+    /*
+    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 50.71%),
+    linear-gradient(127deg, rgba(255,255,0,.8), rgba(255,255,0,0) 99.71%),
+    linear-gradient(336deg, rgba(0,255,0,.8), rgba(0,255,0,0) 80.71%);
+    */
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+#main {
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+}
 #map {
     background-color: grey;
     height: 600px;
     width: 600px;
     overflow: hidden;
-    margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+#cadreMap {
+    background-color: grey;
+    height: 650px;
+    width: 650px;
+    overflow: hidden;
+    margin-top: 45px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+#cadreLog {
+    background-color: brown;
+    height: 190px;
+    width: 650px;   
+    overflow: hidden;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    display: none;
 }
 #log {
     background-color: black;
     color: #04e810;
-    height: 140px;
+    height: 100px;
     width: 560px;
-    margin-top: 30px;
+    margin-top: 25px;
+    margin-left: 25px;
     padding: 20px;
+    overflow: scroll;
+}
+#audioOff {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 1000px;
+    display: none;
+    background-color: lightseagreen;
+    color: white;
+    border-radius: 10px;
+}
+#audioOn {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 1000px;
+    display: none;
+    background-color: lightseagreen;
+    color: white;
+    border-radius: 10px;
+}
+#generateMap {
+    margin-left: 210px;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+    background: linear-gradient(rgba(255, 0, 0, 1), rgba(255, 123, 0, 0.5));
+    color: white;
+    font-size: 18pt;
+    box-shadow: 10px 5px 5px grey;
+}
+#perso1 {
+    height: 250px;
+    width: 400px;
+    background: lightskyblue;
+    top: 45px;
+    left: 700px;
+    position: absolute;
     display: none;
 }
-.initMessage{
-    color: yellowgreen;
-    font-size: 2rem;
+.insidePerso {
+    height: 200px;
+    width: 350px;
+    margin-top: 25px;
+    margin-left: 25px;
+    background-color: grey;
+}
+.imgProfilPerso {
+    height: 100px;
+    width: 150px;
     margin: 5px;
-    text-align: center;
+    position: absolute;
+}
+#imgProfilPerso1 {
+    background-image: url('../media/steve-portrait.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#imgProfilPerso2 {
+    background-image: url('../media/link_portrait.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.infoPerso{
+    height: 90px;
+    margin-left: 160px;
+    margin-top: 5px;
+    position: absolute;
+}
+.armePerso {
+    height: 50px;
+    position: absolute;
+    margin-top: 100px;
+    margin-left: 5px;
+}
+.attackPerso {
+    height: 30px;
+    width: 150px;
+    position: absolute;
+    margin-top: 155px;
+    margin-left: 5px;
+    background-color: brown;
+}
+.attackPerso h3 {
+    bottom: -15px;
+    margin-left: 25px;
+    position: absolute;
+}
+.defendPerso {
+    height: 30px;
+    width: 150px;
+    position: absolute;
+    margin-top: 155px;
+    margin-left: 195px;
+    background-color: brown;
+}
+.defendPerso h3 {
+    bottom: -15px;
+    margin-left: 30px;
+    position: absolute;
+}
+#perso2 {
+    height: 250px;
+    width: 400px;
+    background: rgb(35, 250, 35);
+    top: 380px;
+    left: 700px;
+    position: absolute;
+    display: none;
+}
+
+.audioBtn {
+    margin-bottom: 15px;
+}
+.initMessage{
+    height: 600px;
+    width: 600px;
+    background-image: url('../media/opening.png');
+    background-size: 160%;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 60;
 }
 
 .grass {
