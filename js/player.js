@@ -667,26 +667,42 @@ function Player(classe, x, y) {
             combatDiv.textContent = "COMBAT!!!";
             combatDiv.className = "combatDiv";
             $("#cadreMap").append(combatDiv);
+            var timeoutID = setTimeout(function(){
+                $(".combatDiv").hide();
+            }, 1000);
+            $('#log').innerHTML = "";
+            $('#log').prepend("<p>Le combat commence!</p>");
             document.addEventListener("keydown", combatEvent);
+            if(playerOne.active === true){
+                $("#log").prepend("<p>Steve choisit sa posture de combat: K pour attaquer, M pour se défendre</p>");
+            }else {
+                $("#log").prepend("<p>Link choisit sa posture de combat: Q pour attaquer, D pour se défendre</p>");
+            }
             function combatEvent(e){
                 if((playerOne.pdv > 0) && (playerTwo.pdv > 0)){
-                    if(playerOne.active === true){
+                    if(playerOne.active === true){                        
                         if(e.which == 75){ // Touche K pour attaquer
-                            playerOne.pdv = playerOne.pdv - playerTwo.damage;
+                            playerTwo.pdv = playerTwo.pdv - playerOne.damage;
+                            $('#log').prepend("<p>Steve attaque et inflige " + playerOne.damage + " pts de dégats à Link.</p>");
                             playerOne.active = false;
                             playerTwo.active = true;
-                        }else if(e.which == 77){
+                        }else if(e.which == 77){ // Touche M pour defendre
                             playerOne.pdv = playerOne.pdv - (playerTwo.damage / 2);
+                            var def1 = playerTwo.damage / 2;
+                            $("#log").prepend("<p>Steve se défend et encaisse " + def1 + " pts de dégats.</p>");
                             playerOne.active = false;
                             playerTwo.active = true;
                         }
                     }else {
-                        if(e.which == 81){// TRouche Q pour attaquer
-                            playerTwo.pdv = playerTwo.pdv - playerOne.damage;
+                        if(e.which == 81){// Touche Q pour attaquer
+                            playerOne.pdv = playerOne.pdv - playerTwo.damage;
+                            $('#log').prepend("<p>Link attaque et inflige " + playerTwo.damage + " pts de dégats à Steve.</p>");
                             playerOne.active = true
                             playerTwo.active = false;
                         }else if(e.which == 68){// touche D pour defendre
-                            playerTwo = playerTwo.pdv - (playerOne.damage / 2);
+                            playerTwo.pdv = playerTwo.pdv - (playerOne.damage / 2);
+                            var def2 = playerOne.damage / 2;
+                            $("#log").prepend("<p>Link se défend et encaisse " + def2 + " pts de dégats.</p>");
                             playerOne.active = true;
                             playerTwo.active = false;
                         }
