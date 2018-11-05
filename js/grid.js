@@ -179,7 +179,8 @@ Grid.prototype.createElements = function () {
                 boxDiv.classList.add("active");
             }          
             map.appendChild(boxDiv);            
-        }
+        };
+        playerOne.infoBox();
         console.log("Refresh");
 
     }

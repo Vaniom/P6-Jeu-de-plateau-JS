@@ -8,7 +8,7 @@ function Player(classe, x, y) {
     this.y = y;
     this.pdv = 100;
     this.moveCount = 0;
-
+    this.posture = "attaque";
     this.equiped = "epeeBois";
     this.damage = 15;
     this.active = false;
@@ -88,7 +88,8 @@ function Player(classe, x, y) {
             }
         }
 //------------------------------------------------------------------------------------------------//
-        $(document).keydown(function (e) {
+        document.addEventListener("keydown", event);
+        function event(e) {
             if (playerOne.active === true) {
                 if (e.which == 39) { // ASCII Right arrow
                     var here;
@@ -121,7 +122,7 @@ function Player(classe, x, y) {
                             playerOne.damage = newDamage;
                             gridArray.splice(here, 1, weaponDeposit);
                             playerOne.moveCount++;
-                            plopPlay();
+                            plopPlay();        
                         }else {
                             playerOne.x = playerOne.x + 60;             
                             changePath(here - 1);
@@ -140,12 +141,18 @@ function Player(classe, x, y) {
                             gridArray.splice(here, 1, grassNew);
                             playerOne.moveCount++;
                             plopPlay();
-                        }
-                        
-                    }
+                        }    
                     
+                    }
                     console.log("playerOne.x = " + playerOne.x);
                     console.log("compteur = " + playerOne.moveCount);
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerOne"){                        
+                            if(gridArray[j + 1].classe === "playerTwo"){
+                                fight();
+                            }
+                        }
+                    }
                 } else if (e.which == 37) { // ASCII left arrow
                     var here;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -202,7 +209,13 @@ function Player(classe, x, y) {
                     
                     console.log("playerOne.x = " + playerOne.x);
                     console.log("compteur = " + playerOne.moveCount);
-                
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerOne"){                        
+                            if(gridArray[j - 1].classe === "playerTwo"){
+                                fight();
+                            }
+                        }
+                    }
                 } else if (e.which == 38) { // Fleche UP
                     var here;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -256,10 +269,16 @@ function Player(classe, x, y) {
                             plopPlay();
                         }
                     }
-                
+                    
                     console.log("playerOne.y = " + playerOne.y);
                     console.log("compteur = " + playerOne.moveCount);
-
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerOne"){                        
+                            if(gridArray[j - 10].classe === "playerTwo"){
+                                fight();
+                            }
+                        }
+                    }
                 } else if (e.which == 40) { //fleche DOWN
                     var here;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -316,6 +335,13 @@ function Player(classe, x, y) {
                 
                     console.log("playerOne.y = " + playerOne.y);
                     console.log("compteur = " + playerOne.moveCount);
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerOne"){                        
+                            if(gridArray[j + 10].classe === "playerTwo"){
+                                fight();
+                            }
+                        }
+                    }
                 }else if(e.which == 13){ // on change de joueur si on presse entrée
                     var here;
                     var hereTwo;
@@ -351,7 +377,7 @@ function Player(classe, x, y) {
         //-----------------On passe au joueur 2-----------------//
 
             }else if (playerTwo.active === true) {
-                console.log("hereTwo = " + hereTwo);                    
+                //console.log("hereTwo = " + hereTwo);                    
                 if (e.which == 69) { //Touche E
                     var hereTwo;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -407,6 +433,13 @@ function Player(classe, x, y) {
                     }
                     console.log("playerTwo.x = " + playerTwo.x);
                     console.log("compteur = " + playerTwo.moveCount);
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerTwo"){                        
+                            if(gridArray[j + 1].classe === "playerOne"){
+                                fight();
+                            }
+                        }
+                    }
                 } else if (e.which == 65) { //Touche A
                     var hereTwo;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -462,6 +495,13 @@ function Player(classe, x, y) {
                     }
                     console.log("playerTwo.x = " + playerTwo.x);
                     console.log("compteur = " + playerTwo.moveCount);
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerTwo"){                        
+                            if(gridArray[j - 1].classe === "playerOne"){
+                                fight();
+                            }
+                        }
+                    }
                 } else if (e.which == 90) { //Touche Z
                     var hereTwo;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -517,7 +557,13 @@ function Player(classe, x, y) {
                     }
                     console.log("playerTwo.y = " + playerTwo.y);
                     console.log("compteur = " + playerTwo.moveCount);
-                    
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerTwo"){                        
+                            if(gridArray[j - 10].classe === "playerOne"){
+                                fight();
+                            }
+                        }
+                    }
                 } else if (e.which == 83) { //Touche S
                     var hereTwo;
                     for (var m = 0; m < gridArray.length; m++) {
@@ -573,6 +619,13 @@ function Player(classe, x, y) {
                     }
                     console.log("playerTwo.y = " + playerTwo.y);
                     console.log("compteur = " + playerTwo.moveCount);
+                    for(var j = 0; j < gridArray.length; j++){
+                        if(gridArray[j].classe === "playerTwo"){                        
+                            if(gridArray[j + 10].classe === "playerOne"){
+                                fight();
+                            }
+                        }
+                    }
                 } else if(e.which == 32){ // touche espace pour finir son tour et passer au joueur 1
                     var here;
                     var hereTwo;
@@ -606,6 +659,58 @@ function Player(classe, x, y) {
                 }
             
             }else {}
-        })  
+        };
+        function fight(){
+            document.removeEventListener("keydown", event);
+            console.log("fight !!!");
+            var combatDiv = document.createElement("div");
+            combatDiv.textContent = "COMBAT!!!";
+            combatDiv.className = "combatDiv";
+            $("#cadreMap").append(combatDiv);
+            document.addEventListener("keydown", combatEvent);
+            function combatEvent(e){
+                if((playerOne.pdv > 0) && (playerTwo.pdv > 0)){
+                    if(playerOne.active === true){
+                        if(e.which == 75){ // Touche K pour attaquer
+                            playerOne.pdv = playerOne.pdv - playerTwo.damage;
+                            playerOne.active = false;
+                            playerTwo.active = true;
+                        }else if(e.which == 77){
+                            playerOne.pdv = playerOne.pdv - (playerTwo.damage / 2);
+                            playerOne.active = false;
+                            playerTwo.active = true;
+                        }
+                    }else {
+                        if(e.which == 81){// TRouche Q pour attaquer
+                            playerTwo.pdv = playerTwo.pdv - playerOne.damage;
+                            playerOne.active = true
+                            playerTwo.active = false;
+                        }else if(e.which == 68){// touche D pour defendre
+                            playerTwo = playerTwo.pdv - (playerOne.damage / 2);
+                            playerOne.active = true;
+                            playerTwo.active = false;
+                        }
+                    }
+                }else if(playerOne.pdv <= 0){
+                    document.removeEventListener("keydown", combatEvent);
+                    combatDiv.innerHTML = "";
+                    combatDiv.textContent = "LINK A GAGNÉ !";
+                    $("#log").prepend("<p>Game Over, Link a gagné !</p>");
+                        //game over
+                }else if(playerTwo.pdv <= 0){
+                    document.removeEventListener("keydown", combatEvent);
+                    combatDiv.innerHTML = "";
+                    combatDiv.textContent = "STEVE A GAGNÉ !";
+                    $("#log").prepend("<p>Game Over, Steve a gagné !</p>");
+                }
+            }
+        } 
+    };
+    this.infoBox = function(){
+        $('#pdv1').text(playerOne.pdv);
+        $('#arme1').text(playerOne.equiped);
+        $('#pdv2').text(playerTwo.pdv);
+        $('#arme2').text(playerTwo.equiped);
     }
+  
 }

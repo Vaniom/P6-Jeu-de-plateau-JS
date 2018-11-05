@@ -1,10 +1,5 @@
 body {
     background-color: yellow;
-    /*
-    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 50.71%),
-    linear-gradient(127deg, rgba(255,255,0,.8), rgba(255,255,0,0) 99.71%),
-    linear-gradient(336deg, rgba(0,255,0,.8), rgba(0,255,0,0) 80.71%);
-    */
     height: 100%;
     width: 100%;
     padding: 0;
@@ -252,4 +247,14 @@ body {
 }
 .active {
     filter: contrast(200%);
+}
+.combatDiv {
+    height: 300px;
+    width: 400px;
+    position: absolute;
+    margin-top: -450px;
+    margin-left: 120px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    text-align: center;
 }
