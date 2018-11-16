@@ -1,17 +1,3 @@
-var playerOne;
-var playerTwo;
-for (var m = 0; m < gridArray.length; m++) {
-    if (gridArray[m].classe === "playerOne") {
-        //here = m;
-        playerOne = gridArray[m];
-    }
-}
-for (var m = 0; m < gridArray.length; m++) { 
-    if( gridArray[m].classe === "playerTwo") {
-        //hereTwo = m;
-        playerTwo = gridArray[m];
-    }
-}
 function Game(){
     this.init = function(){
         var message = document.createElement('div');
@@ -42,18 +28,8 @@ function Game(){
             grid.createElements(); // on y place les éléments (pierres, armes, personnages)
             console.log(gridArray); // contrôle du bon remplissage du tableau
             grid.draw(); // On affiche les objets créés
-            //var playerOne;
-            //var playerTwo;
-            // Recupération des objets Player dans des variables
-            /*for(var i = 0; i < gridArray.length; i++){
-                if (gridArray[i].classe === "playerOne"){
-                    playerOne = gridArray[i];
-                } else if (gridArray[i].classe === "playerTwo"){
-                    playerTwo = gridArray[i];
-                }
-            }*/
-            
-            setTimeout(myGame.animate, 2000);// appelle la fonction sur l'objet Player, ne pas faire de second appel pour playerTwo, sinon on lance deux fois la fonction sur les mêmes objets (et on double les valeurs de deplacement!)
+                    
+            setTimeout(myGame.animate, 2000);// On appelle la fonction d'animation avec un délai de 2 secondes.
 
             $('#generateMap').hide();  //Masquage du bouton
             $('#cadreLog').show();
@@ -71,6 +47,7 @@ function Game(){
         $('#pdv2').text(playerTwo.pdv);
         $('#arme2').text(playerTwo.equiped);
     };
+    //-------------Animation des joueurs---------------------------//
     this.animate = function () {
         $('.plopAudio').trigger('load');
 
@@ -93,9 +70,8 @@ function Game(){
                 playerTwo = gridArray[m];
             }
         }
-        console.log("LA = " + hereTwo);
 
-        function path(index) {
+        function path(index) { // définit le chemin possible pour le joueur actif (mouvement haut bas gauche droite de 1 à 3 cases)
             if ((gridArray[index].x < 540) && (gridArray[index + 1].accessible === true)) {
                 gridArray[index + 1].path = true;
                 //console.log("case + 1 path = " + gridArray[here + 1].path);
@@ -141,7 +117,7 @@ function Game(){
               path(hereTwo);
           }
 
-        function changePath(index) {
+        function changePath(index) { //rend le chemin impossible sur les cases définies.
             if (typeof (gridArray[index]) != 'undefined') {
                 gridArray[index].path = false;
             }
@@ -430,7 +406,6 @@ function Game(){
                     }
                     playerOne.active = false;
                     playerTwo.active = true;
-                    console.log("LA2 = " + hereTwo);
                     path(hereTwo);// affichage du chemin possible pour playerTwo
                 }          
         //-----------------On passe au joueur 2-----------------//
@@ -719,7 +694,16 @@ function Game(){
             
             }else {}
         };
-        function fight(){
+        function fight(){ // fonction combat
+            $('.epeeAudio').trigger('load');
+            $('.bouclierAudio').trigger('load');
+
+        function epeePlay() {
+            $('.epeeAudio').trigger('play');
+        }
+        function bouclierPlay() {
+            $('.bouclierAudio').trigger('play');
+        }
             document.removeEventListener("keydown", event);
             console.log("fight !!!");
             var combatDiv = document.createElement("div");
@@ -745,12 +729,14 @@ function Game(){
                             $('#log').prepend("<p>Steve attaque et inflige " + playerOne.damage + " pts de dégats à Link.</p>");
                             playerOne.active = false;
                             playerTwo.active = true;
+                            epeePlay();
                         }else if(e.which == 77){ // Touche M pour defendre
                             playerOne.pdv = playerOne.pdv - (playerTwo.damage / 2);
                             var def1 = playerTwo.damage / 2;
                             $("#log").prepend("<p>Steve se défend et encaisse " + def1 + " pts de dégats.</p>");
                             playerOne.active = false;
                             playerTwo.active = true;
+                            bouclierPlay();
                         }
                     }else {
                         if(e.which == 81){// Touche Q pour attaquer
@@ -758,24 +744,28 @@ function Game(){
                             $('#log').prepend("<p>Link attaque et inflige " + playerTwo.damage + " pts de dégats à Steve.</p>");
                             playerOne.active = true
                             playerTwo.active = false;
+                            epeePlay();
                         }else if(e.which == 68){// touche D pour defendre
                             playerTwo.pdv = playerTwo.pdv - (playerOne.damage / 2);
                             var def2 = playerOne.damage / 2;
                             $("#log").prepend("<p>Link se défend et encaisse " + def2 + " pts de dégats.</p>");
                             playerOne.active = true;
                             playerTwo.active = false;
+                            bouclierPlay();
                         }
                     }
                 }else if(playerOne.pdv <= 0){
                     document.removeEventListener("keydown", combatEvent);
                     combatDiv.innerHTML = "";
                     combatDiv.textContent = "LINK A GAGNÉ !";
+                    $('.combatDiv').show();
                     $("#log").prepend("<p>Game Over, Link a gagné !</p>");
                         //game over
                 }else if(playerTwo.pdv <= 0){
                     document.removeEventListener("keydown", combatEvent);
                     combatDiv.innerHTML = "";
                     combatDiv.textContent = "STEVE A GAGNÉ !";
+                    $('.combatDiv').show();
                     $("#log").prepend("<p>Game Over, Steve a gagné !</p>");
                 }
             }

@@ -46,7 +46,7 @@ body {
     margin-top: 25px;
     margin-left: 25px;
     padding: 20px;
-    overflow: scroll;
+    overflow: auto;
 }
 #audioOff {
     position: absolute;
@@ -249,12 +249,16 @@ body {
     filter: contrast(200%);
 }
 .combatDiv {
-    height: 300px;
+    height: 100px;
     width: 400px;
     position: absolute;
-    margin-top: -450px;
+    margin-top: -350px;
     margin-left: 120px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 0, 0, 0.8);
     padding: 10px;
+    padding-top: 50px;
     text-align: center;
+    color: white;
+    font-size: 24pt;
+    border-radius: 15px;
 }

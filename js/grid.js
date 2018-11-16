@@ -1,5 +1,4 @@
 var gridArray = [];
-//var randomArray = [];
 var playerOne;
 var playerTwo;
 
@@ -147,8 +146,6 @@ Grid.prototype.createElements = function () {
     
     // Contrôle de l'espacement entre les deux joueurs (affichage console)
     function PrintEspace(){
-        //var playerOne;
-        //var playerTwo;
         for (var l = 0; l < gridArray.length; l++){
             if(gridArray[l].classe === "playerOne"){
                 playerOne = gridArray[l];
@@ -204,6 +201,4 @@ Grid.prototype.createElements = function () {
             message.textContent = "Link commence ! ";
             $('#log').append(message);
         }
-        console.log("playerOne.active = " + playerOne.active);
-        console.log("playerTwo.active = " + playerTwo.active);
     }

@@ -1,6 +1,3 @@
-var playerOne;
-var playerTwo;
-
 function Player(classe, x, y) {
     this.classe = classe;
     this.accessible = false;
@@ -11,6 +8,5 @@ function Player(classe, x, y) {
     this.posture = "attaque";
     this.equiped = "epeeBois";
     this.damage = 15;
-    this.active = false;
-    
+    this.active = false;    
 }
