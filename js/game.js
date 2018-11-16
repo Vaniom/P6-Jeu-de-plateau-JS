@@ -1,3 +1,17 @@
+var playerOne;
+var playerTwo;
+for (var m = 0; m < gridArray.length; m++) {
+    if (gridArray[m].classe === "playerOne") {
+        //here = m;
+        playerOne = gridArray[m];
+    }
+}
+for (var m = 0; m < gridArray.length; m++) { 
+    if( gridArray[m].classe === "playerTwo") {
+        //hereTwo = m;
+        playerTwo = gridArray[m];
+    }
+}
 function Game(){
     this.init = function(){
         var message = document.createElement('div');
@@ -51,4 +65,10 @@ function Game(){
             setTimeout(grid.flipCoin, 1000);
         })
     };
+    this.infoBox = function(){
+        $('#pdv1').text(playerOne.pdv);
+        $('#arme1').text(playerOne.equiped);
+        $('#pdv2').text(playerTwo.pdv);
+        $('#arme2').text(playerTwo.equiped);
+    }
 }

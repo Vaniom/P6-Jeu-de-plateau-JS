@@ -180,7 +180,7 @@ Grid.prototype.createElements = function () {
             }          
             map.appendChild(boxDiv);            
         };
-        playerOne.infoBox();
+        myGame.infoBox();
         console.log("Refresh");
 
     }

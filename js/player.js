@@ -721,12 +721,5 @@ function Player(classe, x, y) {
                 }
             }
         } 
-    };
-    this.infoBox = function(){
-        $('#pdv1').text(playerOne.pdv);
-        $('#arme1').text(playerOne.equiped);
-        $('#pdv2').text(playerTwo.pdv);
-        $('#arme2').text(playerTwo.equiped);
-    }
-  
+    } 
 }
