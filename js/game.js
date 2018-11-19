@@ -55,7 +55,6 @@ function Game(){
             $('.plopAudio').volume = 0.0;
             $('.plopAudio').trigger('play');
         }
-
         var here;
         var hereTwo;
         for (var m = 0; m < gridArray.length; m++) {
@@ -740,5 +739,5 @@ function Game(){
                 }
             }
         } 
-    } 
+    }
 }
