@@ -31,21 +31,36 @@ function Game(){
             console.log("espacementXbis = " + (Math.abs(grid.playerOne().x - grid.playerTwo().x)));
             console.log("espacementYbis = " + (Math.abs(grid.playerOne().y - grid.playerTwo().y)));
             grid.draw(); // On affiche les objets créés
-                    
             setTimeout(myGame.animate, 2000);// On appelle la fonction d'animation avec un délai de 2 secondes.
 
-            $('#generateMap').hide();  //Masquage du bouton
+            $('#generateMap').hide();
             $('#cadreLog').show();
             $('#perso1').show();
             $('#perso2').show();
             playOpening();
             $('#audioOff').show();
             $('#log').html("<p>Joueur 1: Utiliser les flèches pour se déplacer, touche Entrée pour finir.</p><p>Joueur 2: Touches A Z E S pour se déplacer, Espace pour finir.</p>");
-            setTimeout(grid.flipCoin, 1000);
+            setTimeout(myGame.flipCoin, 1000);// tirage au sort pour designer celui qui commence
         })
     };
-    
-    this.infoBox = function(){
+    this.flipCoin = function(){ //tirage au sort
+        var coin = Math.floor(Math.random() * 2);
+        console.log("coin = " + coin);
+        console.log("playerOneCoin = " + grid.playerOne().classe);
+        console.log("playerTwoCoin = " + grid.playerTwo().classe);
+        var message = document.createElement('p');
+        if(coin === 0){
+            grid.playerOne().active = true;            
+            message.textContent = "Steve commence ! ";
+            $('#log').append(message);
+        }else {
+            grid.playerTwo().active = true;
+            message.textContent = "Link commence ! ";
+            $('#log').append(message);
+        }
+    };
+    this.infoBox = function(){ // affichage des infos des joueurs
+        
         $('#pdv1').text(grid.playerOne().pdv);
         $('#arme1').text(grid.playerOne().equiped);
         $('#pdv2').text(grid.playerTwo().pdv);
@@ -62,62 +77,26 @@ function Game(){
 
         var here;
         var hereTwo;
+        var gridArray = grid.array;
+        var playerOne = grid.playerOne();
+        var playerTwo = grid.playerTwo();
+        
         for (var m = 0; m < gridArray.length; m++) {
             if (gridArray[m].classe === "playerOne") {
                 here = m;
-                playerOne = gridArray[m];
+                //playerOne = gridArray[m];
             }
         }
         for (var m = 0; m < gridArray.length; m++) { 
             if( gridArray[m].classe === "playerTwo") {
                 hereTwo = m;
-                playerTwo = gridArray[m];
+                //playerTwo = gridArray[m];
             }
         }
-
-        function path(index) { // définit le chemin possible pour le joueur actif (mouvement haut bas gauche droite de 1 à 3 cases)
-            if ((gridArray[index].x < 540) && (gridArray[index + 1].accessible === true)) {
-                gridArray[index + 1].path = true;
-                if ((gridArray[index].x < 480) && (gridArray[index + 2].accessible === true)) {
-                    gridArray[index + 2].path = true;
-                    if ((gridArray[index].x < 420) && (gridArray[index + 3].accessible === true)) {
-                        gridArray[index + 3].path = true;
-                    } else {}
-                } else {}
-            } else {}
-            if ((gridArray[index].x > 0) && (gridArray[index - 1].accessible === true)) {
-                gridArray[index - 1].path = true;
-                if ((gridArray[index].x > 60) && (gridArray[index - 2].accessible === true)) {
-                    gridArray[index - 2].path = true;
-                    if ((gridArray[index].x > 120) && (gridArray[index - 3].accessible === true)) {
-                        gridArray[index - 3].path = true;
-                    } else {}
-                } else {}
-            } else {}
-            if ((gridArray[index].y > 0) && (gridArray[index - 10].accessible === true)) {
-                gridArray[index - 10].path = true;
-                if ((gridArray[index].y > 60) && (gridArray[index - 20].accessible === true)) {
-                    gridArray[index - 20].path = true;
-                    if ((gridArray[index].y > 120) && (gridArray[index - 30].accessible === true)) {
-                        gridArray[index - 30].path = true;
-                    } else {}
-                } else {}
-            } else {}
-            if ((gridArray[index].y < 540) && (gridArray[index + 10].accessible === true)) {
-                gridArray[index + 10].path = true;
-                if ((gridArray[index].y < 480) && (gridArray[index + 20].accessible === true)) {
-                    gridArray[index + 20].path = true;
-                    if ((gridArray[index].y < 420) && (gridArray[index + 30].accessible === true)) {
-                        gridArray[index + 30].path = true;
-                    } else {}
-                } else {}
-            } else {}
-        }
-       
           if(playerOne.active === true){
-              path(here);
+              grid.path(here);
           }else if(playerTwo.active === true){
-              path(hereTwo);
+              grid.path(hereTwo);
           }
 
         function changePath(i1, i2, i3, i4, i5, i6, i7, i8, i9) { //rend le chemin impossible sur les cases définies.
@@ -154,22 +133,25 @@ function Game(){
         function event(e) {
             if (playerOne.active === true) {
                 if (e.which == 39) { // ASCII Right arrow
-                    var here;
+                    var hereX = playerOne.x;
+                    var hereY = playerOne.y;
+                    
                     for (var m = 0; m < gridArray.length; m++) {
                         if (gridArray[m].classe === "playerOne") {
                             here = m;
                             playerOne = gridArray[m];
                         }
                     }
-                    if (gridArray[here + 1].path === true) {
-                        if (gridArray[here + 1].weapon === true) {
+                    
+                    if ((playerOne.x + 60).path === true) {
+                        if ((playerOne.x + 60).weapon === true) {
                             var previousWeapon = playerOne.equiped;
                             var previousDamage = playerOne.damage;
-                            var newWeapon = gridArray[here + 1].classe;
-                            var newDamage = gridArray[here + 1].damage;
+                            var newWeapon = (playerOne.x + 60).classe;
+                            var newDamage = (playerOne.x + 60).damage;
                             playerOne.moveRight();
-                            changePath(here - 1, here - 2, here - 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30);
-                           
+                            changePath(hereX - 60, hereX - 120, hereX - 180, hereY + 60, hereY + 120, hereY + 180, hereY - 60, hereY - 120, hereY - 180);
+                            
                             var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
                             weaponDeposit.path = false;
                             gridArray.splice(here + 1, 1, playerOne);
@@ -336,7 +318,7 @@ function Game(){
                     }
                     playerOne.active = false;
                     playerTwo.active = true;
-                    path(hereTwo);// affichage du chemin possible pour playerTwo
+                    grid.path(hereTwo);// affichage du chemin possible pour playerTwo
                 }          
         //-----------------On passe au joueur 2-----------------//
 
@@ -512,19 +494,19 @@ function Game(){
                 }
                 playerOne.active = true;
                 playerTwo.active = false;
-                path(here);// affichage du chemin possible pour playerOne
+                grid.path(here);// affichage du chemin possible pour playerOne
                 }
             
             }else {}
         };
         function checkFight(){ // verification des conditions pour lancer le combat
-            for(var j = 0; j < gridArray.length; j++){
-                if(gridArray[j].classe === "playerOne"){
-                    if((gridArray[j+1].classe === "playerTwo") || (gridArray[j-1].classe === "playerTwo") || (gridArray[j-10].classe === "playerTwo") || (gridArray[j+10].classe === "playerTwo")){
+            for(var j = 0; j < grid.array.length; j++){
+                if(grid.array[j].classe == "playerOne"){
+                    if((grid.array[j+1].classe == "playerTwo") || (grid.array[j-1].classe == "playerTwo") || (grid.array[j-10].classe == "playerTwo") || (grid.array[j+10].classe == "playerTwo")){
                         fight();
                     }
-                }else if(gridArray[j].classe === "playerTwo"){
-                    if((gridArray[j+1].classe === "playerOne") || (gridArray[j-1].classe === "playerOne") || (gridArray[j-10].classe === "playerOne") || (gridArray[j+10].classe === "playerOne")){
+                }else if(grid.array[j].classe === "playerTwo"){
+                    if((grid.array[j+1].classe === "playerOne") || (grid.array[j-1].classe === "playerOne") || (grid.array[j-10].classe === "playerOne") || (grid.array[j+10].classe === "playerOne")){
                         fight();
                     }
                 }
@@ -534,12 +516,12 @@ function Game(){
             $('.epeeAudio').trigger('load');
             $('.bouclierAudio').trigger('load');
 
-        function epeePlay() {
-            $('.epeeAudio').trigger('play');
-        }
-        function bouclierPlay() {
-            $('.bouclierAudio').trigger('play');
-        }
+            function epeePlay() {
+                $('.epeeAudio').trigger('play');
+            }
+            function bouclierPlay() {
+                $('.bouclierAudio').trigger('play');
+            }
             document.removeEventListener("keydown", event);
             console.log("fight !!!");
             for(var i = 0; i < gridArray.length; i++){
@@ -611,5 +593,5 @@ function Game(){
                 }
             }
         } 
-    } 
+    }
 }

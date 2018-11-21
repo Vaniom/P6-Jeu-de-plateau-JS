@@ -1,10 +1,8 @@
-var gridArray = [];
-var playerOne;
-var playerTwo;
+//var gridArray = [];
 
 function Grid(name) {
     this.name = name;
-    this.array = gridArray;
+    this.array = [];
 //placement des cases "grass"
     this.createElements = function () { 
         for (var i = 0; i < 10; i++) { //variable i boucle sur les abscisses
@@ -13,12 +11,11 @@ function Grid(name) {
                 this.array.push(box);
             }
         };
-        //var verif;
+
         var id;
         var randomArray = [];
         var gridArrayLcl = this.array;
-        var playerOneLcl = this.playerOne;
-        var playerTwoLcl = this.playerTwo;
+
     //Tirage aleatoire d'un entier naturel compris entre 0 et un nombre maximum(exclu)
         function tirage(max) { 
             id = Math.floor(Math.random() * max);
@@ -79,9 +76,11 @@ function Grid(name) {
         function createPlayer(classe) {
             tirage(100);
             check();
+            
             if (classe === "playerTwo"){
                 checkEspacement();
             } else {}
+            
             for (var p = 0; p < randomArray.length; p++) {
                 var val3 = randomArray[p];
                 var player = new Player(classe, gridArrayLcl[val3].x, gridArrayLcl[val3].y);
@@ -93,19 +92,22 @@ function Grid(name) {
         createPlayer("playerTwo");
 
     // Fonction qui vérifie l'espacement x et y entre les deux personnages:
+    
         function checkEspacement() {
-            //var playerOne;
-            for (var k = 0; k < gridArray.length; k++){
-                if(gridArray[k].classe === "playerOne"){
-                    playerOne = gridArray[k];
+            for (var k = 0; k < gridArrayLcl.length; k++){
+                if(gridArrayLcl[k].classe === "playerOne"){
+                    var p1 = gridArrayLcl[k];
                 }
             }
+            
             for (var j = 0; j < randomArray.length; j++) {
                 var dex = randomArray[j];
-                var posXPlayerTwo  = gridArray[dex].x;
-                var posYPlayerTwo = gridArray[dex].y;        
-                var ecartX = Math.abs(posXPlayerTwo - playerOneLcl.x);// Math.abs() renvoie la valeur absolue d'un nombre ou d'une expression
-                var ecartY = Math.abs(posYPlayerTwo - playerOneLcl.y);
+                var posXPlayerTwo  = gridArrayLcl[dex].x;
+                console.log("posXPlayerTwo = " + posXPlayerTwo);
+                var posYPlayerTwo = gridArrayLcl[dex].y;
+                console.log("posYPlayerTwo = " + posYPlayerTwo);     
+                var ecartX = Math.abs(posXPlayerTwo - p1.x);// Math.abs() renvoie la valeur absolue d'un nombre ou d'une expression
+                var ecartY = Math.abs(posYPlayerTwo - p1.y);
                 //console.log("verification = " + ((ecartX < 240) && (ecartY < 240)));
                 if ((ecartX < 240) && (ecartY < 240)) {
                     newItem = Math.floor(Math.random() * 100);
@@ -118,68 +120,21 @@ function Grid(name) {
         // comptage des objets créés (uniquement pour contrôle)
         function count(elt) {
             var count = 0;
-            for (var q = 0; q < gridArray.length; q++) {
-                if (gridArray[q].classe === elt) {
+            for (var q = 0; q < gridArrayLcl.length; q++) {
+                if (gridArrayLcl[q].classe === elt) {
                     count++;
                 } else {}
             }
             return count;
         }
-        var countStone = count("stone");
-        var countGrass = count("grass");
-        var countEpee = count("epee");
-        var countDague = count("dague");
-        var countHache = count("hache");
-        var countSabre = count("sabre");
-        var countPlayerOne = count("playerOne");
-        var countPlayerTwo = count("playerTwo");
-        PrintEspace();
-
-        console.log("compteur grass = " + countGrass);
-        console.log("compteur stones = " + countStone);
-        console.log("compteur épée = " + countEpee);
-        console.log("compteur dague = " + countDague);
-        console.log("compteur hache = " + countHache);
-        console.log("compteur sabre = " + countSabre);
-        console.log("compteur playerOne = " + countPlayerOne);
-        console.log("compteur playerTwo = " + countPlayerTwo);
-        
-        // Contrôle de l'espacement entre les deux joueurs (affichage console)
-        function PrintEspace(){
-            for (var l = 0; l < gridArray.length; l++){
-                if(gridArray[l].classe === "playerOne"){
-                    playerOne = gridArray[l];
-                }else if (gridArray[l].classe === "playerTwo"){
-                    playerTwo = gridArray[l];
-                }
-            }
-            //console.log("espacementX = " + (Math.abs(playerOne.x - playerTwo.x)));
-            //console.log("espacementY = " + (Math.abs(playerOne.y - playerTwo.y)));
-        }
-    }
-
-    //-----------Fin de this.createElements()--------------    
-    
-    var intervalID;
-// methode objet de raffraichissment de l'affichage toutes les 500 millisecondes:
-    this.draw = function(){
-        intervalID = setInterval(intervalDraw, 500);
-    };
-
-    this.flipCoin = function(){
-        var coin = Math.floor(Math.random() * 2);
-        //var coin = 0;
-        console.log("coin = " + coin);
-        var message = document.createElement('p');
-        if(coin === 0){
-            playerOne.active = true;            
-            message.textContent = "Steve commence ! ";
-            $('#log').append(message);
-        }else {
-            playerTwo.active = true;
-            message.textContent = "Link commence ! ";
-            $('#log').append(message);
-        }
+        console.log("compteur herbe = " + count("grass"));
+        console.log("compteur pierres = " + count("stone"));
+        console.log("compteur épée = " + count("epee"));
+        console.log("compteur dague = " + count("dague"));
+        console.log("compteur hache = " + count("hache"));
+        console.log("compteur sabre = " + count("sabre"));
+        console.log("compteur playerOne = " + count("PlayerOne"));
+        console.log("compteur playerTwo = " + count("PlayerTwo"));
     };
     this.playerOne = function(){
         for(var i = 0; i < this.array.length; i++){
@@ -187,37 +142,80 @@ function Grid(name) {
                 return this.array[i];
             }
         }
-    }
+    };
     this.playerTwo = function(){
-        for(var i = 0; i < this.array.length; i++){
-            if(this.array[i].classe === "playerTwo"){
-                return this.array[i];
+        for(var j = 0; j < this.array.length; j++){
+            if(this.array[j].classe === "playerTwo"){
+                return this.array[j];
             }
         }
     }
-}
-//console.log("espacementXbis = " + (Math.abs(this.playerOne().x - this.playerTwo().x)));
-//console.log("espacementYbis = " + (Math.abs(this.playerOne().y - this.playerTwo().y)));
-// fonction d'affichage des éléments du tableau
-function intervalDraw(){
-    var map = document.getElementById('map');
-    while (map.firstChild) {// vidage de la zone de jeu de son contenu
-        map.removeChild(map.firstChild);
-    }
-    for (var i = 0; i < gridArray.length; i++) {
-        var boxDiv = document.createElement('div');            
-        boxDiv.style.left = this.x + "px";
-        boxDiv.style.top = this.y + "px";
-        boxDiv.className = gridArray[i].classe;
-        if(gridArray[i].path === true){
-            boxDiv.classList.add("pathTrue");
-        }
-        if(gridArray[i].active === true){
-            boxDiv.classList.add("active");
-        }          
-        map.appendChild(boxDiv);            
-    };
-    myGame.infoBox();
-    console.log("Refresh");
-};
 
+    //-----------Fin de this.createElements()--------------    
+    
+    // methode objet de raffraichissment de l'affichage toutes les 500 millisecondes:
+    this.draw = function(){
+        setInterval(intervalDraw, 500);
+    };
+    var gridArrayBis = this.array;
+    function intervalDraw(){
+        var map = document.getElementById('map');
+        while (map.firstChild) {// vidage de la zone de jeu de son contenu
+            map.removeChild(map.firstChild);
+        }
+        for (var i = 0; i < gridArrayBis.length; i++) {
+            var boxDiv = document.createElement('div');            
+            boxDiv.style.left = this.x + "px";
+            boxDiv.style.top = this.y + "px";
+            boxDiv.className = gridArrayBis[i].classe;
+            if(gridArrayBis[i].path === true){
+                boxDiv.classList.add("pathTrue");
+            }
+            if(gridArrayBis[i].active === true){
+                boxDiv.classList.add("active");
+            }          
+            map.appendChild(boxDiv);            
+        };
+        myGame.infoBox();
+        console.log("Refresh");
+    };
+    this.path = function(index) { // définit le chemin possible pour le joueur actif (mouvement haut bas gauche droite de 1 à 3 cases)
+        var gridArray = this.array;           
+        if ((gridArray[index].x < 540) && (gridArray[index + 1].accessible === true)) {
+            gridArray[index + 1].path = true;
+            if ((gridArray[index].x < 480) && (gridArray[index + 2].accessible === true)) {
+                gridArray[index + 2].path = true;
+                if ((gridArray[index].x < 420) && (gridArray[index + 3].accessible === true)) {
+                    gridArray[index + 3].path = true;
+                } else {}
+            } else {}
+        } else {}
+        if ((gridArray[index].x > 0) && (gridArray[index - 1].accessible === true)) {
+            gridArray[index - 1].path = true;
+            if ((gridArray[index].x > 60) && (gridArray[index - 2].accessible === true)) {
+                gridArray[index - 2].path = true;
+                if ((gridArray[index].x > 120) && (gridArray[index - 3].accessible === true)) {
+                    gridArray[index - 3].path = true;
+                } else {}
+            } else {}
+        } else {}
+        if ((gridArray[index].y > 0) && (gridArray[index - 10].accessible === true)) {
+            gridArray[index - 10].path = true;
+            if ((gridArray[index].y > 60) && (gridArray[index - 20].accessible === true)) {
+                gridArray[index - 20].path = true;
+                if ((gridArray[index].y > 120) && (gridArray[index - 30].accessible === true)) {
+                    gridArray[index - 30].path = true;
+                } else {}
+            } else {}
+        } else {}
+        if ((gridArray[index].y < 540) && (gridArray[index + 10].accessible === true)) {
+            gridArray[index + 10].path = true;
+            if ((gridArray[index].y < 480) && (gridArray[index + 20].accessible === true)) {
+                gridArray[index + 20].path = true;
+                if ((gridArray[index].y < 420) && (gridArray[index + 30].accessible === true)) {
+                    gridArray[index + 30].path = true;
+                } else {}
+            } else {}
+        } else {}
+    }
+}
