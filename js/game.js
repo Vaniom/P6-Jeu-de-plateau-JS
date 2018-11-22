@@ -1,15 +1,16 @@
-function Game(){
+function Game() {
     var grid;
-    this.init = function(){
+    var that = this;
+    this.init = function () {
         var message = document.createElement('div');
         message.className = "initMessage";
         //message.innerHTML = "<img src='media/opening.png' alt='Steve versus Link' heigth='600px' />";
         $('#map').append(message);
         $('.openingAudio').trigger('load');
-        function playOpening(){
+        function playOpening() {
             $('.openingAudio').trigger('play');
         }
-        function stopOpening(){
+        function stopOpening() {
             $('.openingAudio').trigger('pause');
         }
         $('#audioOn').click(function(){
@@ -93,39 +94,15 @@ function Game(){
                 //playerTwo = gridArray[m];
             }
         }
-          if(playerOne.active === true){
-              grid.path(here);
-          }else if(playerTwo.active === true){
-              grid.path(hereTwo);
-          }
-
-        function changePath(i1, i2, i3, i4, i5, i6, i7, i8, i9) { //rend le chemin impossible sur les cases définies.
-            if (typeof (gridArray[i1]) != 'undefined') {
-                gridArray[i1].path = false;
-            }
-            if (typeof (gridArray[i2]) != 'undefined') {
-                gridArray[i2].path = false;
-            }
-            if (typeof (gridArray[i3]) != 'undefined') {
-                gridArray[i3].path = false;
-            }
-            if (typeof (gridArray[i4]) != 'undefined') {
-                gridArray[i4].path = false;
-            }
-            if (typeof (gridArray[i5]) != 'undefined') {
-                gridArray[i5].path = false;
-            }
-            if (typeof (gridArray[i6]) != 'undefined') {
-                gridArray[i6].path = false;
-            }
-            if (typeof (gridArray[i7]) != 'undefined') {
-                gridArray[i7].path = false;
-            }
-            if (typeof (gridArray[i8]) != 'undefined') {
-                gridArray[i8].path = false;
-            }
-            if (typeof (gridArray[i9]) != 'undefined') {
-                gridArray[i9].path = false;
+        if(playerOne.active === true){
+            grid.path(here);
+        }else if(playerTwo.active === true){
+            grid.path(hereTwo);
+        }
+        var indexArray = [];
+        function changePath(element) { //definition du chemin possible 
+            if(typeof (gridArray[element]) != 'undefined'){
+                gridArray[element].path = false;
             }
         }
 //------------------------------------------------------------------------------------------------//
@@ -143,14 +120,15 @@ function Game(){
                         }
                     }
                     
-                    if ((playerOne.x + 60).path === true) {
-                        if ((playerOne.x + 60).weapon === true) {
+                    if (gridArray[here + 1].path === true) {
+                        if (gridArray[here + 1].weapon === true) {
                             var previousWeapon = playerOne.equiped;
                             var previousDamage = playerOne.damage;
-                            var newWeapon = (playerOne.x + 60).classe;
-                            var newDamage = (playerOne.x + 60).damage;
+                            var newWeapon = gridArray[here + 1].classe;
+                            var newDamage = gridArray[here + 1].damage;
                             playerOne.moveRight();
-                            changePath(hereX - 60, hereX - 120, hereX - 180, hereY + 60, hereY + 120, hereY + 180, hereY - 60, hereY - 120, hereY - 180);
+                            indexArray = [here - 1, here - 2, here - 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30];
+                            indexArray.forEach(changePath);
                             
                             var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
                             weaponDeposit.path = false;
@@ -162,7 +140,8 @@ function Game(){
                             plopPlay();        
                         }else {
                             playerOne.moveRight();
-                            changePath(here - 1, here - 2, here - 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30);           
+                            indexArray = [here - 1, here - 2, here - 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30];
+                            indexArray.forEach(changePath);        
                             var grassNew = new Box("grass", playerOne.x, playerOne.y);
                             grassNew.path = false;
                             gridArray.splice(here + 1, 1, playerOne);
@@ -190,8 +169,8 @@ function Game(){
                             var newWeapon = gridArray[here - 1].classe;
                             var newDamage = gridArray[here - 1].damage;
                             playerOne.moveLeft();
-                            changePath(here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30);
-                            
+                            indexArray = [here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30];
+                            indexArray.forEach(changePath);
                             var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
                             weaponDeposit.path = false;
                             gridArray.splice(here - 1, 1, playerOne);
@@ -202,8 +181,8 @@ function Game(){
                             plopPlay();
                         }else {
                             playerOne.moveLeft();                    
-                            changePath(here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30);
-                            
+                            indexArray = [here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 10, here - 20, here - 30];
+                            indexArray.forEach(changePath);
                             var grassNew = new Box("grass", playerOne.x, playerOne.y);
                             grassNew.path = false;
                             gridArray.splice(here - 1, 1, playerOne);
@@ -231,8 +210,8 @@ function Game(){
                             var newWeapon = gridArray[here - 10].classe;
                             var newDamage = gridArray[here - 10].damage;
                             playerOne.moveUp();
-                            changePath(here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 1, here - 2, here - 3);           
-                         
+                            indexArray = [here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 1, here - 2, here - 3];           
+                            indexArray.forEach(changePath);
                             var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
                             weaponDeposit.path = false;
                             gridArray.splice(here - 10, 1, playerOne);
@@ -243,8 +222,8 @@ function Game(){
                             plopPlay();
                         }else {
                             playerOne.moveUp();                    
-                            changePath(here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 1, here - 2, here - 3);           
-                            
+                            indexArray = [here + 1, here + 2, here + 3, here + 10, here + 20, here + 30, here - 1, here - 2, here - 3];           
+                            indexArray.forEach(changePath);
                             var grassNew = new Box("grass", playerOne.x, playerOne.y);
                             grassNew.path = false;
                             gridArray.splice(here - 10, 1, playerOne);
@@ -272,8 +251,8 @@ function Game(){
                             var newWeapon = gridArray[here + 10].classe;
                             var newDamage = gridArray[here + 10].damage;
                             playerOne.moveDown();
-                            changePath(here + 1, here + 2, here + 3, here - 1, here - 2, here - 3, here - 10, here - 20, here - 30);           
-                            
+                            indexArray = [here + 1, here + 2, here + 3, here - 1, here - 2, here - 3, here - 10, here - 20, here - 30];           
+                            indexArray.forEach(changePath);
                             var weaponDeposit = new Weapon(previousWeapon, playerOne.x, playerOne.y, previousDamage);                            
                             weaponDeposit.path = false;
                             gridArray.splice(here + 10, 1, playerOne);
@@ -284,8 +263,8 @@ function Game(){
                             plopPlay();
                         }else {
                             playerOne.moveDown();                    
-                            changePath(here + 1, here + 2, here + 3, here - 1, here - 2, here - 3, here - 10, here - 20, here - 30);           
-                           
+                            indexArray = [here + 1, here + 2, here + 3, here - 1, here - 2, here - 3, here - 10, here - 20, here - 30];           
+                            indexArray.forEach(changePath);
                             var grassNew = new Box("grass", playerOne.x, playerOne.y);
                             grassNew.path = false;
                             gridArray.splice(here + 10, 1, playerOne);
@@ -312,8 +291,8 @@ function Game(){
                                 playerTwo = gridArray[n];
                             }
                         }
-                        changePath(here + 1, here + 2, here + 3, here - 1, here - 2, here - 3, here - 10, here - 20, here - 30);           
-                        changePath(here + 10, here + 20, here + 30);
+                        indexArray = [here + 1, here + 2, here + 3, here - 1, here - 2, here - 3, here - 10, here - 20, here - 30, here + 10, here + 20, here + 30];           
+                        indexArray.forEach(changePath);
                         
                     }
                     playerOne.active = false;
@@ -338,7 +317,8 @@ function Game(){
                             var newWeapon = gridArray[hereTwo + 1].classe;
                             var newDamage = gridArray[hereTwo + 1].damage;
                             playerTwo.moveRight();
-                            changePath(hereTwo - 1, hereTwo - 2, hereTwo - 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30);
+                            indexArray = [hereTwo - 1, hereTwo - 2, hereTwo - 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30];
+                            indexArray.forEach(changePath);
                             var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                            
                             weaponDeposit.path = false;
                             gridArray.splice(hereTwo + 1, 1, playerTwo);
@@ -349,7 +329,8 @@ function Game(){
                             plopPlay();
                         }else {
                             playerTwo.x = playerTwo.x + 60;                    
-                            changePath(hereTwo - 1, hereTwo - 2, hereTwo - 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30);
+                            indexArray = [hereTwo - 1, hereTwo - 2, hereTwo - 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30];
+                            indexArray.forEach(changePath);
                             var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
                             grassNew.path = false;
                             gridArray.splice(hereTwo + 1, 1, playerTwo);
@@ -376,7 +357,8 @@ function Game(){
                             var newWeapon = gridArray[hereTwo - 1].classe;
                             var newDamage = gridArray[hereTwo - 1].damage;
                             playerTwo.moveLeft();
-                            changePath(hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30);
+                            indexArray = [hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30];
+                            indexArray.forEach(changePath);
                             var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                
                             weaponDeposit.path = false;
                             gridArray.splice(hereTwo - 1, 1, playerTwo);
@@ -387,7 +369,8 @@ function Game(){
                             plopPlay();
                         }else {
                             playerTwo.moveLeft();                    
-                            changePath(hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30);
+                            indexArray = [hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 10, hereTwo - 20, hereTwo - 30];
+                            indexArray.forEach(changePath);
                             var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
                             grassNew.path = false;
                             gridArray.splice(hereTwo - 1, 1, playerTwo);
@@ -414,7 +397,8 @@ function Game(){
                             var newWeapon = gridArray[hereTwo - 10].classe;
                             var newDamage = gridArray[hereTwo - 10].damage;
                             playerTwo.moveUp();
-                            changePath(hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 1, hereTwo - 2, hereTwo - 3);
+                            indexArray = [hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 1, hereTwo - 2, hereTwo - 3];
+                            indexArray.forEach(changePath);
                             var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                            
                             weaponDeposit.path = false;
                             gridArray.splice(hereTwo - 10, 1, playerTwo);
@@ -425,7 +409,8 @@ function Game(){
                             plopPlay();
                         }else {
                             playerTwo.moveUp();                    
-                            changePath(hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 1, hereTwo - 2, hereTwo - 3);
+                            indexArray = [hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 1, hereTwo - 2, hereTwo - 3];
+                            indexArray.forEach(changePath);
                             var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
                             grassNew.path = false;
                             gridArray.splice(hereTwo - 10, 1, playerTwo);
@@ -452,7 +437,8 @@ function Game(){
                             var newWeapon = gridArray[hereTwo + 10].classe;
                             var newDamage = gridArray[hereTwo + 10].damage;
                             playerTwo.moveDown();
-                            changePath(hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo - 10, hereTwo - 20, hereTwo - 30, hereTwo - 1, hereTwo - 2, hereTwo - 3);
+                            indexArray = [hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo - 10, hereTwo - 20, hereTwo - 30, hereTwo - 1, hereTwo - 2, hereTwo - 3];
+                            indexArray.forEach(changePath);
                             var weaponDeposit = new Weapon(previousWeapon, playerTwo.x, playerTwo.y, previousDamage);                            
                             weaponDeposit.path = false;
                             gridArray.splice(hereTwo + 10, 1, playerTwo);
@@ -463,7 +449,8 @@ function Game(){
                             plopPlay();
                         }else {
                             playerTwo.moveDown();                    
-                            changePath(hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo - 10, hereTwo - 20, hereTwo - 30, hereTwo - 1, hereTwo - 2, hereTwo - 3);
+                            indexArray = [hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo - 10, hereTwo - 20, hereTwo - 30, hereTwo - 1, hereTwo - 2, hereTwo - 3];
+                            indexArray.forEach(changePath);
                             var grassNew = new Box("grass", playerTwo.x, playerTwo.y);
                             grassNew.path = false;
                             gridArray.splice(hereTwo + 10, 1, playerTwo);
@@ -489,8 +476,8 @@ function Game(){
                             playerTwo = gridArray[n];
                         }
                     }
-                    changePath(hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 1, hereTwo - 2, hereTwo - 3);
-                    changePath(hereTwo - 10, hereTwo - 20, hereTwo - 30);
+                    indexArray = [hereTwo + 1, hereTwo + 2, hereTwo + 3, hereTwo + 10, hereTwo + 20, hereTwo + 30, hereTwo - 1, hereTwo - 2, hereTwo - 3, hereTwo - 10, hereTwo - 20, hereTwo - 30];
+                    indexArray.forEach(changePath);
                 }
                 playerOne.active = true;
                 playerTwo.active = false;
@@ -503,95 +490,91 @@ function Game(){
             for(var j = 0; j < grid.array.length; j++){
                 if(grid.array[j].classe == "playerOne"){
                     if((grid.array[j+1].classe == "playerTwo") || (grid.array[j-1].classe == "playerTwo") || (grid.array[j-10].classe == "playerTwo") || (grid.array[j+10].classe == "playerTwo")){
-                        fight();
+                        that.fight();
                     }
                 }else if(grid.array[j].classe === "playerTwo"){
                     if((grid.array[j+1].classe === "playerOne") || (grid.array[j-1].classe === "playerOne") || (grid.array[j-10].classe === "playerOne") || (grid.array[j+10].classe === "playerOne")){
-                        fight();
+                        that.fight();
                     }
                 }
             }
         }
-        function fight(){ // fonction combat
-            $('.epeeAudio').trigger('load');
-            $('.bouclierAudio').trigger('load');
+    };
+    this.fight = function (){ // fonction combat
+        $('.epeeAudio').trigger('load');
+        $('.bouclierAudio').trigger('load');
+        var gridArray = grid.array;
+        var playerOne = grid.playerOne();
+        var playerTwo = grid.playerTwo();
 
-            function epeePlay() {
-                $('.epeeAudio').trigger('play');
+        function epeePlay() {
+            $('.epeeAudio').trigger('play');
+        }
+        function bouclierPlay() {
+            $('.bouclierAudio').trigger('play');
+        }
+        document.removeEventListener("keydown", event, true); // on stop l'ecoute des evenements
+        console.log("fight !!!");
+        for(var i = 0; i < gridArray.length; i++){
+            if(gridArray[i].path === true){ // on masque tous les chemins visibles
+                gridArray[i].path = false;
             }
-            function bouclierPlay() {
-                $('.bouclierAudio').trigger('play');
-            }
-            document.removeEventListener("keydown", event);
-            console.log("fight !!!");
-            for(var i = 0; i < gridArray.length; i++){
-                if(gridArray[i].path === true){
-                    gridArray[i].path = false;
-                }
-            }
-            var combatDiv = document.createElement("div");
-            combatDiv.textContent = "COMBAT!!!";
-            combatDiv.className = "combatDiv";
-            $("#cadreMap").append(combatDiv);
-            var timeoutID = setTimeout(function(){
-                $(".combatDiv").hide();
-            }, 1000);
-            $('#log').innerHTML = "";
-            $('#log').prepend("<p>Le combat commence!</p>");
-            document.addEventListener("keydown", combatEvent);
-            if(playerOne.active === true){
-                $("#log").prepend("<p>Steve choisit sa posture de combat: K pour attaquer, M pour se défendre</p>");
-            }else {
-                $("#log").prepend("<p>Link choisit sa posture de combat: Q pour attaquer, D pour se défendre</p>");
-            }
-            function combatEvent(e){
-                if((playerOne.pdv > 0) && (playerTwo.pdv > 0)){
-                    if(playerOne.active === true){                        
-                        if(e.which == 75){ // Touche K pour attaquer
-                            playerTwo.pdv = playerTwo.pdv - playerOne.damage;
-                            $('#log').prepend("<p>Steve attaque et inflige " + playerOne.damage + " pts de dégats à Link.</p>");
-                            playerOne.active = false;
-                            playerTwo.active = true;
-                            epeePlay();
-                        }else if(e.which == 77){ // Touche M pour defendre
-                            playerOne.pdv = playerOne.pdv - (playerTwo.damage / 2);
-                            var def1 = playerTwo.damage / 2;
-                            $("#log").prepend("<p>Steve se défend et encaisse " + def1 + " pts de dégats.</p>");
-                            playerOne.active = false;
-                            playerTwo.active = true;
-                            bouclierPlay();
-                        }
-                    }else {
-                        if(e.which == 81){// Touche Q pour attaquer
-                            playerOne.pdv = playerOne.pdv - playerTwo.damage;
-                            $('#log').prepend("<p>Link attaque et inflige " + playerTwo.damage + " pts de dégats à Steve.</p>");
-                            playerOne.active = true
-                            playerTwo.active = false;
-                            epeePlay();
-                        }else if(e.which == 68){// touche D pour defendre
-                            playerTwo.pdv = playerTwo.pdv - (playerOne.damage / 2);
-                            var def2 = playerOne.damage / 2;
-                            $("#log").prepend("<p>Link se défend et encaisse " + def2 + " pts de dégats.</p>");
-                            playerOne.active = true;
-                            playerTwo.active = false;
-                            bouclierPlay();
-                        }
+        }
+        var combatDiv = document.createElement("div");// creation des infos textuelles
+        combatDiv.textContent = "COMBAT!!!";
+        combatDiv.className = "combatDiv";
+        $("#cadreMap").append(combatDiv);
+        var timeoutID = setTimeout(function(){
+            $(".combatDiv").hide();
+        }, 1000);
+        $('#log').innerHTML = "";
+        $('#log').prepend("<p>Le combat commence!</p>");
+        document.addEventListener("keydown", combatEvent);
+        if(playerOne.active === true){
+            $("#log").prepend("<p>Steve choisit sa posture de combat: K pour attaquer, M pour se défendre</p>");
+        }else {
+            $("#log").prepend("<p>Link choisit sa posture de combat: Q pour attaquer, D pour se défendre</p>");
+        }
+        function combatEvent(e){
+            if((playerOne.pdv > 0) && (playerTwo.pdv > 0)){
+                if(playerOne.active === true){                    
+                    if(e.which == 75){ // Touche K pour attaquer
+                        playerTwo.pdv = playerTwo.pdv - playerOne.damage;
+                        $('#log').prepend("<p>Steve attaque et inflige " + playerOne.damage + " pts de dégats à Link.</p>");
+                        playerOne.active = false;
+                        playerTwo.active = true;
+                        epeePlay();
+                    }else if(e.which == 77){ // Touche M pour defendre
+                        playerOne.pdv = playerOne.pdv - (playerTwo.damage / 2);
+                        var def1 = playerTwo.damage / 2;
+                        $("#log").prepend("<p>Steve se défend et encaisse " + def1 + " pts de dégats.</p>");
+                        playerOne.active = false;
+                        playerTwo.active = true;
+                        bouclierPlay();
                     }
-                }else if(playerOne.pdv <= 0){
-                    document.removeEventListener("keydown", combatEvent);
-                    combatDiv.innerHTML = "";
-                    combatDiv.textContent = "LINK A GAGNÉ !";
-                    $('.combatDiv').show();
-                    $("#log").prepend("<p>Game Over, Link a gagné !</p>");
-                        //game over
-                }else if(playerTwo.pdv <= 0){
-                    document.removeEventListener("keydown", combatEvent);
-                    combatDiv.innerHTML = "";
-                    combatDiv.textContent = "STEVE A GAGNÉ !";
-                    $('.combatDiv').show();
-                    $("#log").prepend("<p>Game Over, Steve a gagné !</p>");
+                }else {   
+                    if(e.which == 81){// Touche Q pour attaquer
+                        playerOne.pdv = playerOne.pdv - playerTwo.damage;
+                        $('#log').prepend("<p>Link attaque et inflige " + playerTwo.damage + " pts de dégats à Steve.</p>");
+                        playerOne.active = true
+                        playerTwo.active = false;
+                        epeePlay();
+                    }else if(e.which == 68){// touche D pour defendre
+                        playerTwo.pdv = playerTwo.pdv - (playerOne.damage / 2);
+                        var def2 = playerOne.damage / 2;
+                        $("#log").prepend("<p>Link se défend et encaisse " + def2 + " pts de dégats.</p>");
+                        playerOne.active = true;
+                        playerTwo.active = false;
+                        bouclierPlay();
+                    }
                 }
+            }else if(playerOne.pdv <= 0){
+                document.removeEventListener("keydown", combatEvent);
+                playerOne.dead();
+            }else if(playerTwo.pdv <= 0){
+                document.removeEventListener("keydown", combatEvent);
+                playerTwo.dead();
             }
-        } 
+        }
     }
 }

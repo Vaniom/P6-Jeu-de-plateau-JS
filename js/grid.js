@@ -1,5 +1,3 @@
-//var gridArray = [];
-
 function Grid(name) {
     this.name = name;
     this.array = [];

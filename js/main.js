@@ -1,4 +1,4 @@
-var myGame;
+//var myGame;
 $(function(){
     myGame = new Game();
     myGame.init();
