@@ -12,15 +12,22 @@ function Player(classe, x, y) {
     this.y = y;
     this.pdv = 100;
     this.dead = function () {
-        $('.combatDiv').innerHTML = "";
-        $('.combatDiv').textContent = this.name() + " A GAGNÉ !";
+        $('.combatDiv').html("");
+        var winner;
+        var loser = this.name();
+        if(loser == "Steve") {
+            winner = "Link";
+        }else if (loser == "Link") {
+            winner = "Steve";
+        }
+        $('.combatDiv').html("<p>Game over! " + winner + " a gagné !</p>");
         $('.combatDiv').show();
-        $("#log").prepend("<p>Game Over, " + this.name() + " a gagné !</p>");
+        $("#log").prepend("<p>Game Over, " + winner + " a gagné !</p>");
     };
     this.moveCount = 0;
     this.posture = "attaque";
     this.equiped = "epeeBois";
-    this.damage = 15;
+    this.damage = 10;
     this.active = false;
     this.moveUp = function(){
         this.y = this.y - 60;
