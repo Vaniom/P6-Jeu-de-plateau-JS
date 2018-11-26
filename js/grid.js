@@ -148,10 +148,8 @@ function Grid(name) {
             }
         }
     }
-
-    //-----------Fin de this.createElements()--------------    
     
-    // methode objet de raffraichissment de l'affichage toutes les 500 millisecondes:
+// methode objet de raffraichissment de l'affichage toutes les 500 millisecondes:
     this.draw = function(){
         setInterval(intervalDraw, 500);
     };

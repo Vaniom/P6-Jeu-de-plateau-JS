@@ -25,9 +25,7 @@ function Game() {
         $('#generateMap').click(function(){ //Lorsqu'on clique sur "commencer"
             grid = new Grid("myMap"); // on crée une nouvelle map
             grid.createElements(); // on y place les éléments (pierres, armes, personnages)
-            console.log(grid.array); // contrôle du bon remplissage du tableau en console
-            console.log("===> playerOne dans Objet = " + grid.playerOne().classe);
-            console.log("espacementXbis = " + (Math.abs(grid.playerOne().x - grid.playerTwo().x)));
+            console.log(grid.array); // contrôle du bon remplissage du tableau en console            console.log("espacementXbis = " + (Math.abs(grid.playerOne().x - grid.playerTwo().x)));
             console.log("espacementYbis = " + (Math.abs(grid.playerOne().y - grid.playerTwo().y)));
             grid.draw(); // On affiche les objets créés
             setTimeout(myGame.zone, 2000);// On appelle la fonction de zonage autour du personnage avec un délai de 2 secondes.
@@ -124,7 +122,7 @@ function Game() {
                 }
                 console.log("playerOne.x = " + playerOne.x);
                 console.log("compteur = " + playerOne.moveCount);
-                that.checkFight();
+                that.checkFight(playerOne);
             } else if (e.which == 37) { // fleche gauche
                 here = that.here();
                 if (gridArray[here - 1].path === true) {
@@ -141,7 +139,7 @@ function Game() {
                 
                 console.log("playerOne.x = " + playerOne.x);
                 console.log("compteur = " + playerOne.moveCount);
-                that.checkFight();
+                that.checkFight(playerOne);
             } else if (e.which == 38) { // Fleche haut
                 here = that.here();
                 if (gridArray[here - 10].path === true) {
@@ -159,12 +157,12 @@ function Game() {
                 
                 console.log("playerOne.y = " + playerOne.y);
                 console.log("compteur = " + playerOne.moveCount);
-                that.checkFight();
+                that.checkFight(playerOne);
             } else if (e.which == 40) { //fleche bas
                 here = that.here();
                 if (gridArray[here + 10].path === true) {
                     if (gridArray[here + 10].weapon === true) {
-                       that.weaponSwitch(playerOne, here, +10);
+                        that.weaponSwitch(playerOne, here, +10);
                         playerOne.moveCount++;
                         plopPlay();
                     }else {
@@ -176,7 +174,7 @@ function Game() {
             
                 console.log("playerOne.y = " + playerOne.y);
                 console.log("compteur = " + playerOne.moveCount);
-                that.checkFight();
+                that.checkFight(playerOne);
             }else if(e.which == 13){ // on change de joueur si on presse entrée
                 here = that.here();
                 hereTwo = that.hereTwo();
@@ -199,14 +197,14 @@ function Game() {
                         playerTwo.moveCount++;
                         plopPlay();
                     }else {
-                        that.move(playerTwo, hereTwo, +1);
+                        that.move(playerTwo, hereTwo, +1, grid);
                         playerTwo.moveCount++;
                         plopPlay();
                     }
                 }
                 console.log("playerTwo.x = " + playerTwo.x);
                 console.log("compteur = " + playerTwo.moveCount);
-                that.checkFight();
+                that.checkFight(playerTwo);
             } else if (e.which == 65) { //Touche A (gauche)
                 hereTwo = that.hereTwo();
                 if (gridArray[hereTwo - 1].path === true) {
@@ -222,7 +220,7 @@ function Game() {
                 }
                 console.log("playerTwo.x = " + playerTwo.x);
                 console.log("compteur = " + playerTwo.moveCount);
-                that.checkFight();
+                that.checkFight(playerTwo);
             } else if (e.which == 90) { //Touche Z (haut)
                 hereTwo = that.hereTwo();
                 if (gridArray[hereTwo - 10].path === true) {
@@ -238,7 +236,7 @@ function Game() {
                 }
                 console.log("playerTwo.y = " + playerTwo.y);
                 console.log("compteur = " + playerTwo.moveCount);
-                that.checkFight();
+                that.checkFight(playerTwo);
             } else if (e.which == 83) { //Touche S (bas)
                 hereTwo = that.hereTwo();
                 if (gridArray[hereTwo + 10].path === true) {
@@ -254,7 +252,7 @@ function Game() {
                 }
                 console.log("playerTwo.y = " + playerTwo.y);
                 console.log("compteur = " + playerTwo.moveCount);
-                that.checkFight();
+                that.checkFight(playerTwo);
             } else if(e.which == 32){ // touche espace pour finir son tour et passer au joueur 1
                 here = that.here();
                 hereTwo = that.hereTwo();
@@ -317,19 +315,37 @@ function Game() {
         grid.array.splice(i + next, 1, player);
         grid.array.splice(i, 1, grassNew);
     };
-    this.checkFight = function (){ // verification des conditions pour engager le combat
-        for(var j = 0; j < grid.array.length; j++){
-            if(grid.array[j].classe == "playerOne"){
-                if((grid.array[j+1].classe == "playerTwo") || (grid.array[j-1].classe == "playerTwo") || (grid.array[j-10].classe == "playerTwo") || (grid.array[j+10].classe == "playerTwo")){
-                    that.fight();
-                }
-            }else if(grid.array[j].classe === "playerTwo"){
-                if((grid.array[j+1].classe === "playerOne") || (grid.array[j-1].classe === "playerOne") || (grid.array[j-10].classe === "playerOne") || (grid.array[j+10].classe === "playerOne")){
-                    that.fight();
-                }
+    this.checkFight = function(player) {
+        var xPos = [player.x + 60, player.x - 60];
+        console.log("xPos = " + xPos);
+        var yPos = [player.y + 60, player.y - 60];
+        var x = player.x;
+        var y = player.y;
+        console.log("yPos = " + yPos);
+        xPos.forEach(function(element){
+            for (var i = 0; i < grid.array.length; i++){
+                if ((grid.array[i].x === element) && (grid.array[i].y === y)){
+                    var name = grid.array[i].name;
+                    if (name != undefined){
+                        console.log('Fight!!! = ' + grid.array[i].x + ", " + grid.array[i].y);
+                        that.fight();
+                    }else {}
+                }else {}
             }
-        }
+        })
+        yPos.forEach(function (element){
+            for (var i = 0; i < grid.array.length; i++){
+                if ((grid.array[i].y === element) && (grid.array[i].x === x)){
+                    var name = grid.array[i].name;
+                    if (name != undefined){
+                        console.log('Fight!!! = ' + grid.array[i].x + ", " + grid.array[i].y);
+                        that.fight();
+                    }else {}
+                }else {}
+            }
+        })
     }
+    
     this.fight = function (){
         $('.epeeAudio').trigger('load');
         $('.bouclierAudio').trigger('load');
@@ -344,7 +360,6 @@ function Game() {
             $('.bouclierAudio').trigger('play');
         }
         document.removeEventListener("keydown", that.event); // on stoppe l'écoute des evenements
-        console.log("fight !!!");
         for(var i = 0; i < gridArray.length; i++){
             if(gridArray[i].path === true){ // on masque tous les chemins visibles
                 gridArray[i].path = false;
