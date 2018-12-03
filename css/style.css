@@ -67,7 +67,7 @@ body {
     border-radius: 10px;
 }
 #generateMap {
-    margin-left: 210px;
+    margin-left: 900px;
     height: 50px;
     width: 200px;
     border-radius: 10px;
@@ -261,4 +261,27 @@ body {
     color: white;
     font-size: 24pt;
     border-radius: 15px;
+}
+.instructions {
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 700px;
+    width: 600px;
+    height: 600px;
+    color: #44211B;
+    text-align: left;
+    overflow: auto;
+    font-family: 'Bangers', cursive;
+    font-size: 18pt;
+}
+.instructions em {
+    color: red;
+    font-size: 20pt;
+    font-style: normal;
+}
+.instructions h2, h1 {
+    text-align: center;
+}
+.light {
+    background-color: #DC4E43;
 }

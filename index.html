@@ -3,7 +3,8 @@
     <head>
         <title>Jeu tour par tour</title>
         <meta charset="utf-8">        
-        <link rel="stylesheet" type="text/css" href="css/style.css" />   
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">   
     </head>
     
     <body>
@@ -25,10 +26,10 @@
                     <div id="armePerso1" class="armePerso">
                         <h3>Arme équipée: <span id="arme1"></span></h3>
                     </div>
-                    <div id="attackPerso1" class="attackPerso">
+                    <div id="attackPerso1" class="attackPerso indicateurs">
                         <h3>Attaque (K)</h3>
                     </div>
-                    <div id="defendPerso1" class="defendPerso">
+                    <div id="defendPerso1" class="defendPerso indicateurs">
                         <h3>Défense (M)</h3>
                     </div>
                 </div>
@@ -44,10 +45,10 @@
                         <div id="armePerso2" class="armePerso">
                             <h3>Arme équipée: <span id="arme2"></span></h3>
                         </div>
-                        <div id="attackPerso2" class="attackPerso">
+                        <div id="attackPerso2" class="attackPerso indicateurs">
                             <h3>Attaque (Q)</h3>
                         </div>
-                        <div id="defendPerso2" class="defendPerso">
+                        <div id="defendPerso2" class="defendPerso indicateurs">
                             <h3>Défense (D)</h3>
                         </div>
                     </div>
@@ -75,6 +76,21 @@
             
             <input type="button" id="generateMap" name="generatemap" value="Commencer ! " />
         </div>
+        <div class="instructions">
+            <h1>Bienvenue sur Steve vs Link !</h1>
+            <p>Ceci est un jeu pour deux joueurs sur le même ordinateur.<br />
+                Les joueurs jouent à tour de rôle.<br />
+                Le joueur 1 incarne Steve, il utilise les <em>fleches directionnelles </em> pour se deplacer.<br />
+                Le joueur 2 incarne Link, les touches de déplacement sont <em>A Z E S </em>.<br />
+                En fin de tour, le joueur 1 passe la main à son adversaire en pressant la touche <em>Entrée </em>.<br />
+                Le joueur 2 fait de même grace à la <em>barre d'Espace</em>. <br />
+                Lorsque vous entrez en phase de combat, le joueur 1 attaque avec <em>K </em> et défend avec <em>M </em>. <br />
+                Le joueur 2 utilisera <em>Q </em> pour attaquer et <em>D </em> pour défendre. <br />
+                Des aides textuelles vous guideront tout au long de la partie dans la console du jeu.<br />
+            </p>
+            <h2>Que le meilleur gagne !</h2>
+                
+        </div>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/grid.js"></script>
@@ -82,7 +98,6 @@
         <script type="text/javascript" src="js/weapon.js"></script>
         <script type="text/javascript" src="js/player.js"></script>
         <script type="text/javascript" src="js/game.js"></script>
-
     </body>
     
 </html>
