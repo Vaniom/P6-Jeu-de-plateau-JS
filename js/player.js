@@ -11,7 +11,7 @@ function Player(classe, x, y) {
     this.x = x;
     this.y = y;
     this.pdv = 100;
-    this.dead = function () {
+    this.isDead = function () {
         $('.combatDiv').html("");
         var winner;
         var loser = this.name();

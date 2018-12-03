@@ -28,8 +28,8 @@ function Game() {
             console.log(grid.array); // contrôle du bon remplissage du tableau en console            console.log("espacementXbis = " + (Math.abs(grid.playerOne().x - grid.playerTwo().x)));
             console.log("espacementYbis = " + (Math.abs(grid.playerOne().y - grid.playerTwo().y)));
             grid.draw(); // On affiche les objets créés
-            setTimeout(myGame.zone, 2000);// On appelle la fonction de zonage autour du personnage avec un délai de 2 secondes.
-            document.addEventListener("keydown", that.event);// on ajoute un ecouteur d'evenement sur les touches pressées
+            setTimeout(myGame.allowAccess, 2000);// On appelle la fonction de zonage autour du personnage avec un délai de 2 secondes.
+            document.addEventListener("keydown", that.keyPressEvent);// on ajoute un ecouteur d'evenement sur les touches pressées
 
             $('#generateMap').hide();
             $('.instructions').hide();
@@ -85,7 +85,7 @@ function Game() {
             }
         }
     };
-    this.zone = function () { // definition des cases praticables pour la position du joueur en cours
+    this.allowAccess = function () { // definition des cases praticables pour la position du joueur en cours
         var here = that.here();
         var hereTwo = that.hereTwo(); 
         if(grid.playerOne().active === true){
@@ -94,7 +94,7 @@ function Game() {
             grid.path(hereTwo);
         }
     };
-    this.event = function (e) {
+    this.keyPressEvent = function (e) {
         $('.plopAudio').trigger('load');
 
         function plopPlay() { 
@@ -359,7 +359,7 @@ function Game() {
         function bouclierPlay() {
             $('.bouclierAudio').trigger('play');
         }
-        document.removeEventListener("keydown", that.event); // on stoppe l'écoute des evenements
+        document.removeEventListener("keydown", that.keyPressEvent); // on stoppe l'écoute des evenements
         for(var i = 0; i < gridArray.length; i++){
             if(gridArray[i].path === true){ // on masque tous les chemins visibles
                 gridArray[i].path = false;
@@ -425,10 +425,10 @@ function Game() {
                 }
             }else if(playerOne.pdv <= 0){
                 document.removeEventListener("keydown", combatEvent);
-                grid.playerOne().dead();
+                grid.playerOne().isDead();
             }else if(playerTwo.pdv <= 0){
                 document.removeEventListener("keydown", combatEvent);
-                grid.playerTwo().dead();
+                grid.playerTwo().isDead();
             }
         }
     }
