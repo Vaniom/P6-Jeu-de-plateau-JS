@@ -36,7 +36,7 @@ function Game() {
             $('#cadreLog').show();
             $('#perso1').show();
             $('#perso2').show();
-            //playOpening();  // <=== commenter pour couper la musique par defaut
+            playOpening();  // <=== commenter pour couper la musique
             $('#audioOff').show();
             $('#log').html("<p>Joueur 1: Utiliser les flèches pour se déplacer, touche Entrée pour finir.</p><p>Joueur 2: Touches A Z E S pour se déplacer, Espace pour finir.</p>");
             setTimeout(myGame.flipCoin, 1000);// tirage au sort pour designer celui qui commence
